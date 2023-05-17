@@ -21,10 +21,10 @@
         private TextBox prebivalisteTextBox;
         private Label obracunskiPeriodLabel;
         private DateTimePicker obracunskiPeriodDateTimePicker;
-        private Label brutoPrihodLabel;
-        private TextBox brutoPrihodTextBox;
         private Label valutaLabel;
         private ComboBox valutaComboBox;
+        private Label brutoPrihodLabel;
+        private TextBox brutoPrihodTextBox;
         private Label porezPlacenLabel;
         private TextBox porezPlacenTextBox;
         private Button submitButton;
@@ -77,6 +77,7 @@
             this.Name = "MainForm";
             this.Text = "PP OPO XML generator za Dividende";
             this.ClientSize = new System.Drawing.Size(400, 500);
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             // imePrezimeLabel
             this.imePrezimeLabel.AutoSize = true;
@@ -155,20 +156,9 @@
             this.obracunskiPeriodDateTimePicker.Size = new System.Drawing.Size(160, 20);
             this.Controls.Add(this.obracunskiPeriodDateTimePicker);
 
-            // brutoPrihodLabel
-            this.brutoPrihodLabel.AutoSize = true;
-            this.brutoPrihodLabel.Location = new System.Drawing.Point(20, 300);
-            this.brutoPrihodLabel.Text = "Bruto prihod:";
-            this.Controls.Add(this.brutoPrihodLabel);
-
-            // brutoPrihodTextBox
-            this.brutoPrihodTextBox.Location = new System.Drawing.Point(200, 300);
-            this.brutoPrihodTextBox.Size = new System.Drawing.Size(160, 20);
-            this.Controls.Add(this.brutoPrihodTextBox);
-
             // valutaLabel
             this.valutaLabel.AutoSize = true;
-            this.valutaLabel.Location = new System.Drawing.Point(20, 340);
+            this.valutaLabel.Location = new System.Drawing.Point(20, 300);
             this.valutaLabel.Text = "Valuta:";
             this.Controls.Add(this.valutaLabel);
 
@@ -179,9 +169,20 @@
             "USD",
             "EUR",
             "GBP"});
-            this.valutaComboBox.Location = new System.Drawing.Point(200, 340);
+            this.valutaComboBox.Location = new System.Drawing.Point(200, 300);
             this.valutaComboBox.Size = new System.Drawing.Size(160, 20);
             this.Controls.Add(this.valutaComboBox);
+
+            // brutoPrihodLabel
+            this.brutoPrihodLabel.AutoSize = true;
+            this.brutoPrihodLabel.Location = new System.Drawing.Point(20, 340);
+            this.brutoPrihodLabel.Text = "Bruto prihod:";
+            this.Controls.Add(this.brutoPrihodLabel);
+
+            // brutoPrihodTextBox
+            this.brutoPrihodTextBox.Location = new System.Drawing.Point(200, 340);
+            this.brutoPrihodTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.brutoPrihodTextBox);
 
             // porezPlacenLabel
             this.porezPlacenLabel.AutoSize = true;
