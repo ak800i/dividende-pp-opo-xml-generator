@@ -19,7 +19,7 @@ namespace DividendeXmlGeneratorForm
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            string errorMessage = ValidateNotNull(brutoPrihodTextBox.Text, porezPlacenTextBox.Text);
+            string errorMessage = ValidateInput();
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 // Display error message
@@ -32,15 +32,6 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
             string valuta = valutaComboBox.Text;
             decimal porezPlacen = decimal.Parse(porezPlacenTextBox.Text);
-
-            // Perform input validation
-            errorMessage = ValidateInput(obracunskiPeriod, brutoPrihod, valuta, porezPlacen);
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                // Display error message
-                MessageBox.Show(errorMessage, "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             // Input validation passed, perform further actions
             string xml = Core.GenerateXml(
@@ -61,34 +52,26 @@ namespace DividendeXmlGeneratorForm
             this.Close();
         }
 
-        private string ValidateNotNull(string brutoPrihod, string porezPlacen)
+        private string ValidateInput()
         {
-            if (string.IsNullOrWhiteSpace(brutoPrihod))
+            // Perform your validation logic here
+            // Return an error message if validation fails, or an empty string if validation passes
+            if (string.IsNullOrWhiteSpace(brutoPrihodTextBox.Text))
             {
                 return "Bruto prihod must be entered.";
             }
 
-            if (string.IsNullOrWhiteSpace(porezPlacen))
+            if (string.IsNullOrWhiteSpace(porezPlacenTextBox.Text))
             {
                 return "Porez placen drugoj drzavi must be entered.";
             }
 
-            return string.Empty;
-        }
-
-        private string ValidateInput(DateTime selectedDate, decimal brutoPrihod, string valuta, decimal porezPlacen)
-        {
-            // Perform your validation logic here
-            // Return an error message if validation fails, or an empty string if validation passes
-
-            // Example validation: Bruto prihod must be greater than 0
-            if (brutoPrihod <= 0)
+            if (decimal.Parse(brutoPrihodTextBox.Text) <= 0)
             {
                 return "Bruto prihod must be greater than 0.";
             }
 
-            // Example validation: Porez placen drugoj drzavi must be a positive value
-            if (porezPlacen < 0)
+            if (decimal.Parse(porezPlacenTextBox.Text) < 0)
             {
                 return "Porez placen drugoj drzavi must be a positive value.";
             }
