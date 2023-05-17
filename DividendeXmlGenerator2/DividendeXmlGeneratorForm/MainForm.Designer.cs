@@ -7,15 +7,27 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private System.Windows.Forms.Label labelObracunskiPeriod;
-        private System.Windows.Forms.DateTimePicker obracunskiPeriodDateTimePicker;
-        private System.Windows.Forms.Label labelValuta;
-        private System.Windows.Forms.ComboBox valutaComboBox;
-        private System.Windows.Forms.Label labelBrutoPrihod;
-        private System.Windows.Forms.TextBox brutoPrihodTextBox;
-        private System.Windows.Forms.Label labelPorezPlacenDrugojDrzavi;
-        private System.Windows.Forms.TextBox porezPlacenTextBox;
-        private System.Windows.Forms.Button submitButton;
+        private Label imePrezimeLabel;
+        private TextBox imePrezimeTextBox;
+        private Label ulicaBrojLabel;
+        private TextBox ulicaBrojTextBox;
+        private Label jmbgLabel;
+        private TextBox jmbgTextBox;
+        private Label telefonLabel;
+        private TextBox telefonTextBox;
+        private Label emailLabel;
+        private TextBox emailTextBox;
+        private Label prebivalisteLabel;
+        private TextBox prebivalisteTextBox;
+        private Label obracunskiPeriodLabel;
+        private DateTimePicker obracunskiPeriodDateTimePicker;
+        private Label brutoPrihodLabel;
+        private TextBox brutoPrihodTextBox;
+        private Label valutaLabel;
+        private ComboBox valutaComboBox;
+        private Label porezPlacenLabel;
+        private TextBox porezPlacenTextBox;
+        private Button submitButton;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -38,111 +50,157 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.imePrezimeLabel = new System.Windows.Forms.Label();
+            this.imePrezimeTextBox = new System.Windows.Forms.TextBox();
+            this.ulicaBrojLabel = new System.Windows.Forms.Label();
+            this.ulicaBrojTextBox = new System.Windows.Forms.TextBox();
+            this.jmbgLabel = new System.Windows.Forms.Label();
+            this.jmbgTextBox = new System.Windows.Forms.TextBox();
+            this.telefonLabel = new System.Windows.Forms.Label();
+            this.telefonTextBox = new System.Windows.Forms.TextBox();
+            this.emailLabel = new System.Windows.Forms.Label();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
+            this.prebivalisteLabel = new System.Windows.Forms.Label();
+            this.prebivalisteTextBox = new System.Windows.Forms.TextBox();
+            this.obracunskiPeriodLabel = new System.Windows.Forms.Label();
             this.obracunskiPeriodDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.valutaComboBox = new System.Windows.Forms.ComboBox();
+            this.brutoPrihodLabel = new System.Windows.Forms.Label();
             this.brutoPrihodTextBox = new System.Windows.Forms.TextBox();
+            this.valutaLabel = new System.Windows.Forms.Label();
+            this.valutaComboBox = new System.Windows.Forms.ComboBox();
+            this.porezPlacenLabel = new System.Windows.Forms.Label();
             this.porezPlacenTextBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
-            this.labelObracunskiPeriod = new System.Windows.Forms.Label();
-            this.labelBrutoPrihod = new System.Windows.Forms.Label();
-            this.labelValuta = new System.Windows.Forms.Label();
-            this.labelPorezPlacenDrugojDrzavi = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+
+            // Set up the form
+            this.Name = "MainForm";
+            this.Text = "PP OPO XML generator za Dividende";
+            this.ClientSize = new System.Drawing.Size(400, 500);
+
+            // imePrezimeLabel
+            this.imePrezimeLabel.AutoSize = true;
+            this.imePrezimeLabel.Location = new System.Drawing.Point(20, 20);
+            this.imePrezimeLabel.Text = "Ime i prezime obveznika:";
+            this.Controls.Add(this.imePrezimeLabel);
+
+            // imePrezimeTextBox
+            this.imePrezimeTextBox.Location = new System.Drawing.Point(200, 20);
+            this.imePrezimeTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.imePrezimeTextBox);
+
+            // ulicaBrojLabel
+            this.ulicaBrojLabel.AutoSize = true;
+            this.ulicaBrojLabel.Location = new System.Drawing.Point(20, 60);
+            this.ulicaBrojLabel.Text = "Ulica i broj obveznika:";
+            this.Controls.Add(this.ulicaBrojLabel);
+
+            // ulicaBrojTextBox
+            this.ulicaBrojTextBox.Location = new System.Drawing.Point(200, 60);
+            this.ulicaBrojTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.ulicaBrojTextBox);
+
+            // jmbgLabel
+            this.jmbgLabel.AutoSize = true;
+            this.jmbgLabel.Location = new System.Drawing.Point(20, 100);
+            this.jmbgLabel.Text = "JMBG podnosioca prijave:";
+            this.Controls.Add(this.jmbgLabel);
+
+            // jmbgTextBox
+            this.jmbgTextBox.Location = new System.Drawing.Point(200, 100);
+            this.jmbgTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.jmbgTextBox);
+
+            // telefonLabel
+            this.telefonLabel.AutoSize = true;
+            this.telefonLabel.Location = new System.Drawing.Point(20, 140);
+            this.telefonLabel.Text = "Telefon kontakt osobe:";
+            this.Controls.Add(this.telefonLabel);
+
+            // telefonTextBox
+            this.telefonTextBox.Location = new System.Drawing.Point(200, 140);
+            this.telefonTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.telefonTextBox);
+
+            // emailLabel
+            this.emailLabel.AutoSize = true;
+            this.emailLabel.Location = new System.Drawing.Point(20, 180);
+            this.emailLabel.Text = "Email:";
+            this.Controls.Add(this.emailLabel);
+
+            // emailTextBox
+            this.emailTextBox.Location = new System.Drawing.Point(200, 180);
+            this.emailTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.emailTextBox);
+
+            // prebivalisteLabel
+            this.prebivalisteLabel.AutoSize = true;
+            this.prebivalisteLabel.Location = new System.Drawing.Point(20, 220);
+            this.prebivalisteLabel.Text = "Prebivaliste opstina - kod:";
+            this.Controls.Add(this.prebivalisteLabel);
+
+            // prebivalisteTextBox
+            this.prebivalisteTextBox.Location = new System.Drawing.Point(200, 220);
+            this.prebivalisteTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.prebivalisteTextBox);
+
+            // obracunskiPeriodLabel
+            this.obracunskiPeriodLabel.AutoSize = true;
+            this.obracunskiPeriodLabel.Location = new System.Drawing.Point(20, 260);
+            this.obracunskiPeriodLabel.Text = "Datum ostvarivanja prihoda:";
+            this.Controls.Add(this.obracunskiPeriodLabel);
+
             // obracunskiPeriodDateTimePicker
-            // 
-            this.obracunskiPeriodDateTimePicker.Location = new System.Drawing.Point(12, 31);
-            this.obracunskiPeriodDateTimePicker.Name = "obracunskiPeriodDateTimePicker";
-            this.obracunskiPeriodDateTimePicker.Size = new System.Drawing.Size(200, 23);
-            this.obracunskiPeriodDateTimePicker.TabIndex = 1;
-            // 
+            this.obracunskiPeriodDateTimePicker.Location = new System.Drawing.Point(200, 260);
+            this.obracunskiPeriodDateTimePicker.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.obracunskiPeriodDateTimePicker);
+
+            // brutoPrihodLabel
+            this.brutoPrihodLabel.AutoSize = true;
+            this.brutoPrihodLabel.Location = new System.Drawing.Point(20, 300);
+            this.brutoPrihodLabel.Text = "Bruto prihod:";
+            this.Controls.Add(this.brutoPrihodLabel);
+
+            // brutoPrihodTextBox
+            this.brutoPrihodTextBox.Location = new System.Drawing.Point(200, 300);
+            this.brutoPrihodTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.brutoPrihodTextBox);
+
+            // valutaLabel
+            this.valutaLabel.AutoSize = true;
+            this.valutaLabel.Location = new System.Drawing.Point(20, 340);
+            this.valutaLabel.Text = "Valuta:";
+            this.Controls.Add(this.valutaLabel);
+
             // valutaComboBox
-            // 
             this.valutaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.valutaComboBox.FormattingEnabled = true;
             this.valutaComboBox.Items.AddRange(new object[] {
             "USD",
             "EUR",
             "GBP"});
-            this.valutaComboBox.Location = new System.Drawing.Point(12, 83);
-            this.valutaComboBox.Name = "valutaComboBox";
-            this.valutaComboBox.Size = new System.Drawing.Size(200, 23);
-            this.valutaComboBox.TabIndex = 3;
-            // 
-            // brutoPrihodTextBox
-            // 
-            this.brutoPrihodTextBox.Location = new System.Drawing.Point(12, 135);
-            this.brutoPrihodTextBox.Name = "brutoPrihodTextBox";
-            this.brutoPrihodTextBox.Size = new System.Drawing.Size(200, 23);
-            this.brutoPrihodTextBox.TabIndex = 5;
-            // 
-            // porezPlacenTextBox
-            // 
-            this.porezPlacenTextBox.Location = new System.Drawing.Point(12, 187);
-            this.porezPlacenTextBox.Name = "porezPlacenTextBox";
-            this.porezPlacenTextBox.Size = new System.Drawing.Size(200, 23);
-            this.porezPlacenTextBox.TabIndex = 7;
-            // 
-            // submitButton
-            // 
-            this.submitButton.Location = new System.Drawing.Point(12, 232);
-            this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(75, 23);
-            this.submitButton.TabIndex = 8;
-            this.submitButton.Text = "Submit";
-            this.submitButton.UseVisualStyleBackColor = true;
-            this.submitButton.Click += new System.EventHandler(this.SubmitButton_Click);
-            // 
-            // labelObracunskiPeriod
-            // 
-            this.labelObracunskiPeriod.AutoSize = true;
-            this.labelObracunskiPeriod.Location = new System.Drawing.Point(12, 15);
-            this.labelObracunskiPeriod.Name = "labelObracunskiPeriod";
-            this.labelObracunskiPeriod.Size = new System.Drawing.Size(104, 15);
-            this.labelObracunskiPeriod.TabIndex = 0;
-            this.labelObracunskiPeriod.Text = "Obracunski period";
-            // 
-            // labelBrutoPrihod
-            // 
-            this.labelBrutoPrihod.AutoSize = true;
-            this.labelBrutoPrihod.Location = new System.Drawing.Point(12, 119);
-            this.labelBrutoPrihod.Name = "labelBrutoPrihod";
-            this.labelBrutoPrihod.Size = new System.Drawing.Size(74, 15);
-            this.labelBrutoPrihod.TabIndex = 4;
-            this.labelBrutoPrihod.Text = "Bruto prihod";
-            // 
-            // labelValuta
-            // 
-            this.labelValuta.AutoSize = true;
-            this.labelValuta.Location = new System.Drawing.Point(12, 67);
-            this.labelValuta.Name = "labelValuta";
-            this.labelValuta.Size = new System.Drawing.Size(39, 15);
-            this.labelValuta.TabIndex = 2;
-            this.labelValuta.Text = "Valuta";
-            // 
-            // labelPorezPlacenDrugojDrzavi
-            // 
-            this.labelPorezPlacenDrugojDrzavi.AutoSize = true;
-            this.labelPorezPlacenDrugojDrzavi.Location = new System.Drawing.Point(12, 171);
-            this.labelPorezPlacenDrugojDrzavi.Name = "labelPorezPlacenDrugojDrzavi";
-            this.labelPorezPlacenDrugojDrzavi.Size = new System.Drawing.Size(146, 15);
-            this.labelPorezPlacenDrugojDrzavi.TabIndex = 6;
-            this.labelPorezPlacenDrugojDrzavi.Text = "Porez placen drugoj drzavi";
-            // 
-            // MainForm
-            // 
-            this.ClientSize = new System.Drawing.Size(244, 267);
-            this.Controls.Add(this.labelPorezPlacenDrugojDrzavi);
-            this.Controls.Add(this.labelValuta);
-            this.Controls.Add(this.labelBrutoPrihod);
-            this.Controls.Add(this.labelObracunskiPeriod);
-            this.Controls.Add(this.submitButton);
-            this.Controls.Add(this.porezPlacenTextBox);
+            this.valutaComboBox.Location = new System.Drawing.Point(200, 340);
+            this.valutaComboBox.Size = new System.Drawing.Size(160, 20);
             this.Controls.Add(this.valutaComboBox);
-            this.Controls.Add(this.brutoPrihodTextBox);
-            this.Controls.Add(this.obracunskiPeriodDateTimePicker);
-            this.Name = "MainForm";
-            this.Text = "PP OPO XML generator za Dividende";
+
+            // porezPlacenLabel
+            this.porezPlacenLabel.AutoSize = true;
+            this.porezPlacenLabel.Location = new System.Drawing.Point(20, 380);
+            this.porezPlacenLabel.Text = "Porez placen drugoj drzavi:";
+            this.Controls.Add(this.porezPlacenLabel);
+
+            // porezPlacenTextBox
+            this.porezPlacenTextBox.Location = new System.Drawing.Point(200, 380);
+            this.porezPlacenTextBox.Size = new System.Drawing.Size(160, 20);
+            this.Controls.Add(this.porezPlacenTextBox);
+
+            // submitButton
+            this.submitButton.Location = new System.Drawing.Point(200, 420);
+            this.submitButton.Size = new System.Drawing.Size(75, 23);
+            this.submitButton.Text = "Submit";
+            this.submitButton.Click += new System.EventHandler(this.SubmitButton_Click);
+            this.Controls.Add(this.submitButton);
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
