@@ -28,7 +28,7 @@ namespace DividendeXmlGeneratorForm
             }
 
             // Get the user input
-            DateTime obracunskiPeriod = obracunskiPeriodDateTimePicker.Value;
+            DateTime obracunskiPeriod = datumOstvarivanjaPrihodaDateTimePicker.Value;
             decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
             string valuta = valutaComboBox.Text;
             decimal porezPlacen = decimal.Parse(porezPlacenTextBox.Text);
