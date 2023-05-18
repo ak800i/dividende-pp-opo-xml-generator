@@ -41,16 +41,20 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
             decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
 
-
-
             // Input validation passed, perform further actions
             string xml = Core.GenerateXml(
-                obracunskiPeriodGodina: datumOstvarivanjaPrihoda.Year.ToString(),
-                obracunskiPeriodMesec: datumOstvarivanjaPrihoda.Month.ToString(),
-                obracunskiPeriodDan: datumOstvarivanjaPrihoda.Day.ToString(),
+                imePrezimeObveznika: imePrezimeObveznika,
+                ulicaBrojPoreskogObveznika: ulicaBroj,
+                jmbgPodnosiocaPrijave: jmbgPodnosioca,
+                telefonKontaktOsobe: telefonKontaktOsobe,
+                elektronskaPosta: email,
+                prebivalisteOpstina: kodOpstinePrebivalista,
+                datumOstvarivanjaPrihodaGodina: datumOstvarivanjaPrihoda.Year.ToString(),
+                datumOstvarivanjaPrihodaMesec: datumOstvarivanjaPrihoda.Month.ToString(),
+                datumOstvarivanjaPrihodaDan: datumOstvarivanjaPrihoda.Day.ToString(),
+                valuta: valuta,
                 brutoPrihod: Math.Round(brutoPrihod, 2),
-                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
-                valuta: valuta);
+                porezPlacenDrugojDrzavi: Math.Round(porezPlacenDrugojDrzavi, 2));
 
             // Create a new XML file with the filled-in template
             string newFilePath = String.Format(@"{0}\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), datumOstvarivanjaPrihoda);

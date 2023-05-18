@@ -14,29 +14,35 @@ namespace DividendeXmlGeneratorForm
         /// <summary>
         /// Returns XML as string.
         /// </summary>
-        /// <param name="obracunskiPeriodGodina"></param>
-        /// <param name="obracunskiPeriodMesec"></param>
-        /// <param name="obracunskiPeriodDan"></param>
+        /// <param name="datumOstvarivanjaPrihodaGodina"></param>
+        /// <param name="datumOstvarivanjaPrihodaMesec"></param>
+        /// <param name="datumOstvarivanjaPrihodaDan"></param>
         /// <param name="brutoPrihod"></param>
         /// <param name="porezPlacenDrugojDrzavi"></param>
         /// <param name="valuta"></param>
         /// <returns>XML as string. Persist it with <see cref="File.WriteAllText(string, string)"/>.</returns>
         public static string GenerateXml(
-            string obracunskiPeriodGodina,
-            string obracunskiPeriodMesec,
-            string obracunskiPeriodDan,
+            string imePrezimeObveznika,
+            string ulicaBrojPoreskogObveznika,
+            string jmbgPodnosiocaPrijave,
+            string telefonKontaktOsobe,
+            string elektronskaPosta,
+            string prebivalisteOpstina,
+            string datumOstvarivanjaPrihodaGodina,
+            string datumOstvarivanjaPrihodaMesec,
+            string datumOstvarivanjaPrihodaDan,
+            string valuta,
             decimal brutoPrihod,
-            decimal porezPlacenDrugojDrzavi,
-            string valuta)
+            decimal porezPlacenDrugojDrzavi)
         {
             // Get user input
             /*
-            string obracunskiPeriodGodina = "2023";
-            string obracunskiPeriodMesec = "03";
-            string obracunskiPeriodDan = "09";
+            string datumOstvarivanjaPrihodaGodina = "2023";
+            string datumOstvarivanjaPrihodaMesec = "03";
+            string datumOstvarivanjaPrihodaDan = "09";
             double brutoPrihod = 10.00;
             double porezPlacenDrugojDrzavi = 3.00;
-            */
+            
 
             // One-time user input
             string imePrezimeObveznika = "ALEKSA JANKOVIĆ";
@@ -45,14 +51,15 @@ namespace DividendeXmlGeneratorForm
             string telefonKontaktOsobe = "0613334444";
             string elektronskaPosta = "aleksa@gmail.com";
             string prebivalisteOpstina = "013"; // OVO JE ZA NOVI BEOGRAD, ZA DRUGE OPSTINE, SAZNAJTE GENERISANJEM XML-a
+            */
 
             decimal poreskaStopaSrbija = 0.15M;
 
-            decimal kursNaDanOstvarivanjaPrihoda = GetKursNaDan(obracunskiPeriodGodina, obracunskiPeriodMesec, obracunskiPeriodDan, valuta);
-            string obracunskiPeriod = $"{obracunskiPeriodGodina}-{obracunskiPeriodMesec}";
-            string datumDospelostiObaveze = MonthLater(new DateTime(int.Parse(obracunskiPeriodGodina), int.Parse(obracunskiPeriodMesec), int.Parse(obracunskiPeriodDan)));
+            decimal kursNaDanOstvarivanjaPrihoda = GetKursNaDan(datumOstvarivanjaPrihodaGodina, datumOstvarivanjaPrihodaMesec, datumOstvarivanjaPrihodaDan, valuta);
+            string obracunskiPeriod = $"{datumOstvarivanjaPrihodaGodina}-{datumOstvarivanjaPrihodaMesec}";
+            string datumDospelostiObaveze = MonthLater(new DateTime(int.Parse(datumOstvarivanjaPrihodaGodina), int.Parse(datumOstvarivanjaPrihodaMesec), int.Parse(datumOstvarivanjaPrihodaDan)));
             string datumObracunaKamate = FirstNextWorkingDay(DateTime.Today);
-            string datumOstvarivanjaPrihoda = $"{obracunskiPeriodGodina}-{obracunskiPeriodMesec}-{obracunskiPeriodDan}";
+            string datumOstvarivanjaPrihoda = $"{datumOstvarivanjaPrihodaGodina}-{datumOstvarivanjaPrihodaMesec}-{datumOstvarivanjaPrihodaDan}";
             decimal brutoPrihodDouble = Math.Round(brutoPrihod * kursNaDanOstvarivanjaPrihoda, 2);
             decimal osnovicaZaPorezDouble = brutoPrihodDouble;
             decimal obracunatiPorezDouble = Math.Round(osnovicaZaPorezDouble * poreskaStopaSrbija, 2);
