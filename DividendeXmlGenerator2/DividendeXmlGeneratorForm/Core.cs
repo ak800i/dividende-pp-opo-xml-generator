@@ -98,9 +98,10 @@ namespace DividendeXmlGeneratorForm
             var submitButton = driver.FindElement(By.Id("index:buttonShow"));
             submitButton.Click();
 
-            // Wait for the page to load and locate the "FORMIRANA NA DAN" date and the "SREDNJI KURS" value for EUR
+            // Wait for the page to load and locate the "FORMIRANA NA DAN" date and the "SREDNJI KURS" value for the given currency
             var formiranaNaDan = driver.FindElement(By.Id("index:id31")).Text;
             var srednjiKurs = driver.FindElement(By.XPath($"//td[contains(text(), '{valuta}')]/following-sibling::td[4]")).Text;
+            var vaziZa = driver.FindElement(By.XPath($"//td[contains(text(), '{valuta}')]/following-sibling::td[3]")).Text;
 
             // Print the retrieved values
             Console.WriteLine($"FORMIRANA NA DAN: {formiranaNaDan}");
@@ -114,7 +115,7 @@ namespace DividendeXmlGeneratorForm
                 throw new Exception("Something went wrong");
             }
 
-            return decimal.Parse(srednjiKurs.Replace(',', '.'));
+            return decimal.Parse(srednjiKurs.Replace(',', '.')) / int.Parse(vaziZa);
         }
 
         public static string MonthLater(DateTime from)
