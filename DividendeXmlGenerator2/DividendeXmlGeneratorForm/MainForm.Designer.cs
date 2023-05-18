@@ -19,7 +19,7 @@
         private TextBox emailTextBox;
         private Label prebivalisteLabel;
         private TextBox prebivalisteTextBox;
-        private Label obracunskiPeriodLabel;
+        private Label datumOstvarivanjaPrihodaLabel;
         private DateTimePicker obracunskiPeriodDateTimePicker;
         private Label valutaLabel;
         private ComboBox valutaComboBox;
@@ -62,7 +62,7 @@
             this.emailTextBox = new System.Windows.Forms.TextBox();
             this.prebivalisteLabel = new System.Windows.Forms.Label();
             this.prebivalisteTextBox = new System.Windows.Forms.TextBox();
-            this.obracunskiPeriodLabel = new System.Windows.Forms.Label();
+            this.datumOstvarivanjaPrihodaLabel = new System.Windows.Forms.Label();
             this.obracunskiPeriodDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.brutoPrihodLabel = new System.Windows.Forms.Label();
             this.brutoPrihodTextBox = new System.Windows.Forms.TextBox();
@@ -169,14 +169,14 @@
             this.prebivalisteTextBox.Size = new System.Drawing.Size(160, 23);
             this.prebivalisteTextBox.TabIndex = 11;
             // 
-            // obracunskiPeriodLabel
+            // datumOstvarivanjaPrihodaLabel
             // 
-            this.obracunskiPeriodLabel.AutoSize = true;
-            this.obracunskiPeriodLabel.Location = new System.Drawing.Point(20, 260);
-            this.obracunskiPeriodLabel.Name = "obracunskiPeriodLabel";
-            this.obracunskiPeriodLabel.Size = new System.Drawing.Size(156, 15);
-            this.obracunskiPeriodLabel.TabIndex = 12;
-            this.obracunskiPeriodLabel.Text = "Datum ostvarivanja prihoda:";
+            this.datumOstvarivanjaPrihodaLabel.AutoSize = true;
+            this.datumOstvarivanjaPrihodaLabel.Location = new System.Drawing.Point(20, 260);
+            this.datumOstvarivanjaPrihodaLabel.Name = "datumOstvarivanjaPrihodaLabel";
+            this.datumOstvarivanjaPrihodaLabel.Size = new System.Drawing.Size(156, 15);
+            this.datumOstvarivanjaPrihodaLabel.TabIndex = 12;
+            this.datumOstvarivanjaPrihodaLabel.Text = "Datum ostvarivanja prihoda:";
             // 
             // obracunskiPeriodDateTimePicker
             // 
@@ -295,7 +295,7 @@
             this.Controls.Add(this.emailTextBox);
             this.Controls.Add(this.prebivalisteLabel);
             this.Controls.Add(this.prebivalisteTextBox);
-            this.Controls.Add(this.obracunskiPeriodLabel);
+            this.Controls.Add(this.datumOstvarivanjaPrihodaLabel);
             this.Controls.Add(this.obracunskiPeriodDateTimePicker);
             this.Controls.Add(this.valutaLabel);
             this.Controls.Add(this.valutaComboBox);
