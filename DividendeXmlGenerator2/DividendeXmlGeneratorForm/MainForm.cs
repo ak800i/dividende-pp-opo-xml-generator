@@ -29,22 +29,31 @@ namespace DividendeXmlGeneratorForm
             }
 
             // Get the user input
-            DateTime obracunskiPeriod = datumOstvarivanjaPrihodaDateTimePicker.Value;
-            decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
+            string imePrezimeObveznika = imePrezimeTextBox.Text;
+            string ulicaBroj = ulicaBrojTextBox.Text;
+            string jmbgPodnosioca = jmbgTextBox.Text;
+            string telefonKontaktOsobe = telefonTextBox.Text;
+            string email = emailTextBox.Text;
+            string opstinaPrebivalista = prebivalisteComboBox.Text;
+            string kodOpstinePrebivalista = opstinaPrebivalista.Split(" - ")[1];
+            DateTime datumOstvarivanjaPrihoda = datumOstvarivanjaPrihodaDateTimePicker.Value;
             string valuta = valutaComboBox.Text;
-            decimal porezPlacen = decimal.Parse(porezPlacenTextBox.Text);
+            decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
+            decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
+
+
 
             // Input validation passed, perform further actions
             string xml = Core.GenerateXml(
-                obracunskiPeriodGodina: obracunskiPeriod.Year.ToString(),
-                obracunskiPeriodMesec: obracunskiPeriod.Month.ToString(),
-                obracunskiPeriodDan: obracunskiPeriod.Day.ToString(),
+                obracunskiPeriodGodina: datumOstvarivanjaPrihoda.Year.ToString(),
+                obracunskiPeriodMesec: datumOstvarivanjaPrihoda.Month.ToString(),
+                obracunskiPeriodDan: datumOstvarivanjaPrihoda.Day.ToString(),
                 brutoPrihod: Math.Round(brutoPrihod, 2),
-                porezPlacenDrugojDrzavi: porezPlacen,
+                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
                 valuta: valuta);
 
             // Create a new XML file with the filled-in template
-            string newFilePath = String.Format(@"{0}\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), obracunskiPeriod);
+            string newFilePath = String.Format(@"{0}\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), datumOstvarivanjaPrihoda);
             File.WriteAllText(newFilePath, xml);
 
             Console.WriteLine($"New file created at {newFilePath}");
