@@ -49,12 +49,10 @@ namespace DividendeXmlGeneratorForm
                 telefonKontaktOsobe: telefonKontaktOsobe,
                 email: email,
                 kodOpstinePrebivalista: kodOpstinePrebivalista,
-                datumOstvarivanjaPrihodaGodina: datumOstvarivanjaPrihoda.Year.ToString(),
-                datumOstvarivanjaPrihodaMesec: datumOstvarivanjaPrihoda.Month.ToString(),
-                datumOstvarivanjaPrihodaDan: datumOstvarivanjaPrihoda.Day.ToString(),
+                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                 valuta: valuta,
-                brutoPrihod: Math.Round(brutoPrihod, 2),
-                porezPlacenDrugojDrzavi: Math.Round(porezPlacenDrugojDrzavi, 2));
+                brutoPrihod: brutoPrihod,
+                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi);
 
             // Create a new XML file with the filled-in template
             string newFilePath = String.Format(@"{0}\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), datumOstvarivanjaPrihoda);

@@ -28,9 +28,7 @@ namespace DividendeXmlGeneratorForm
             string telefonKontaktOsobe,
             string email,
             string kodOpstinePrebivalista,
-            string datumOstvarivanjaPrihodaGodina,
-            string datumOstvarivanjaPrihodaMesec,
-            string datumOstvarivanjaPrihodaDan,
+            DateTime datumOstvarivanjaPrihodaDateTime,
             string valuta,
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi)
@@ -52,6 +50,13 @@ namespace DividendeXmlGeneratorForm
             string email = "aleksa@gmail.com";
             string kodOpstinePrebivalista = "013"; // OVO JE ZA NOVI BEOGRAD, ZA DRUGE OPSTINE, SAZNAJTE GENERISANJEM XML-a
             */
+
+            string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.Year.ToString();
+            string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.Month.ToString();
+            string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.Day.ToString();
+
+            brutoPrihod = Math.Round(brutoPrihod, 2);
+            porezPlacenDrugojDrzavi = Math.Round(porezPlacenDrugojDrzavi, 2);
 
             decimal poreskaStopaSrbija = 0.15M;
 
