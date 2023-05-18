@@ -10,7 +10,7 @@
         private Label imePrezimeLabel;
         private TextBox imePrezimeObveznikaTextBox;
         private Label ulicaBrojLabel;
-        private TextBox ulicaBrojTextBox;
+        private TextBox ulicaBrojPoreskogObveznikaTextBox;
         private Label jmbgLabel;
         private TextBox jmbgPodnosiocaTextBox;
         private Label telefonLabel;
@@ -53,7 +53,7 @@
             this.imePrezimeLabel = new System.Windows.Forms.Label();
             this.imePrezimeObveznikaTextBox = new System.Windows.Forms.TextBox();
             this.ulicaBrojLabel = new System.Windows.Forms.Label();
-            this.ulicaBrojTextBox = new System.Windows.Forms.TextBox();
+            this.ulicaBrojPoreskogObveznikaTextBox = new System.Windows.Forms.TextBox();
             this.jmbgLabel = new System.Windows.Forms.Label();
             this.jmbgPodnosiocaTextBox = new System.Windows.Forms.TextBox();
             this.telefonLabel = new System.Windows.Forms.Label();
@@ -98,12 +98,12 @@
             this.ulicaBrojLabel.TabIndex = 2;
             this.ulicaBrojLabel.Text = "Ulica i broj obveznika:";
             // 
-            // ulicaBrojTextBox
+            // ulicaBrojPoreskogObveznikaTextBox
             // 
-            this.ulicaBrojTextBox.Location = new System.Drawing.Point(200, 60);
-            this.ulicaBrojTextBox.Name = "ulicaBrojTextBox";
-            this.ulicaBrojTextBox.Size = new System.Drawing.Size(160, 23);
-            this.ulicaBrojTextBox.TabIndex = 3;
+            this.ulicaBrojPoreskogObveznikaTextBox.Location = new System.Drawing.Point(200, 60);
+            this.ulicaBrojPoreskogObveznikaTextBox.Name = "ulicaBrojTextBox";
+            this.ulicaBrojPoreskogObveznikaTextBox.Size = new System.Drawing.Size(160, 23);
+            this.ulicaBrojPoreskogObveznikaTextBox.TabIndex = 3;
             // 
             // jmbgLabel
             // 
@@ -485,7 +485,7 @@
             this.Controls.Add(this.imePrezimeLabel);
             this.Controls.Add(this.imePrezimeObveznikaTextBox);
             this.Controls.Add(this.ulicaBrojLabel);
-            this.Controls.Add(this.ulicaBrojTextBox);
+            this.Controls.Add(this.ulicaBrojPoreskogObveznikaTextBox);
             this.Controls.Add(this.jmbgLabel);
             this.Controls.Add(this.jmbgPodnosiocaTextBox);
             this.Controls.Add(this.telefonLabel);

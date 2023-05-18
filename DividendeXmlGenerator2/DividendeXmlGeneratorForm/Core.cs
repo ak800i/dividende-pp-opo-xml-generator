@@ -24,10 +24,10 @@ namespace DividendeXmlGeneratorForm
         public static string GenerateXml(
             string imePrezimeObveznika,
             string ulicaBrojPoreskogObveznika,
-            string jmbgPodnosiocaPrijave,
+            string jmbgPodnosioca,
             string telefonKontaktOsobe,
-            string elektronskaPosta,
-            string prebivalisteOpstina,
+            string email,
+            string kodOpstinePrebivalista,
             string datumOstvarivanjaPrihodaGodina,
             string datumOstvarivanjaPrihodaMesec,
             string datumOstvarivanjaPrihodaDan,
@@ -47,10 +47,10 @@ namespace DividendeXmlGeneratorForm
             // One-time user input
             string imePrezimeObveznika = "ALEKSA JANKOVIĆ";
             string ulicaBrojPoreskogObveznika = "Београдска 33";
-            string jmbgPodnosiocaPrijave = "1101995445566";
+            string jmbgPodnosioca = "1101995445566";
             string telefonKontaktOsobe = "0613334444";
-            string elektronskaPosta = "aleksa@gmail.com";
-            string prebivalisteOpstina = "013"; // OVO JE ZA NOVI BEOGRAD, ZA DRUGE OPSTINE, SAZNAJTE GENERISANJEM XML-a
+            string email = "aleksa@gmail.com";
+            string kodOpstinePrebivalista = "013"; // OVO JE ZA NOVI BEOGRAD, ZA DRUGE OPSTINE, SAZNAJTE GENERISANJEM XML-a
             */
 
             decimal poreskaStopaSrbija = 0.15M;
@@ -69,9 +69,9 @@ namespace DividendeXmlGeneratorForm
             string filledTemplate = DividendeTemplate.dividendeXmlTemplate
                 .Replace("{ImePrezimeObveznika}", imePrezimeObveznika)
                 .Replace("{UlicaBrojPoreskogObveznika}", ulicaBrojPoreskogObveznika)
-                .Replace("{JMBGPodnosiocaPrijave}", jmbgPodnosiocaPrijave)
-                .Replace("{ElektronskaPosta}", elektronskaPosta)
-                .Replace("{PrebivalisteOpstina}", prebivalisteOpstina)
+                .Replace("{JMBGPodnosiocaPrijave}", jmbgPodnosioca)
+                .Replace("{ElektronskaPosta}", email)
+                .Replace("{PrebivalisteOpstina}", kodOpstinePrebivalista)
                 .Replace("{TelefonKontaktOsobe}", telefonKontaktOsobe)
 
                 .Replace("{ObracunskiPeriod}", obracunskiPeriod)

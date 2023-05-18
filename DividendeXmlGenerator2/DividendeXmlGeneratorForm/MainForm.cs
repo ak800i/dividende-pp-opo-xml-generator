@@ -30,7 +30,7 @@ namespace DividendeXmlGeneratorForm
 
             // Get the user input
             string imePrezimeObveznika = imePrezimeObveznikaTextBox.Text;
-            string ulicaBroj = ulicaBrojTextBox.Text;
+            string ulicaBrojPoreskogObveznika = ulicaBrojPoreskogObveznikaTextBox.Text;
             string jmbgPodnosioca = jmbgPodnosiocaTextBox.Text;
             string telefonKontaktOsobe = telefonKontaktOsobeTextBox.Text;
             string email = emailTextBox.Text;
@@ -44,11 +44,11 @@ namespace DividendeXmlGeneratorForm
             // Input validation passed, perform further actions
             string xml = Core.GenerateXml(
                 imePrezimeObveznika: imePrezimeObveznika,
-                ulicaBrojPoreskogObveznika: ulicaBroj,
-                jmbgPodnosiocaPrijave: jmbgPodnosioca,
+                ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
+                jmbgPodnosioca: jmbgPodnosioca,
                 telefonKontaktOsobe: telefonKontaktOsobe,
-                elektronskaPosta: email,
-                prebivalisteOpstina: kodOpstinePrebivalista,
+                email: email,
+                kodOpstinePrebivalista: kodOpstinePrebivalista,
                 datumOstvarivanjaPrihodaGodina: datumOstvarivanjaPrihoda.Year.ToString(),
                 datumOstvarivanjaPrihodaMesec: datumOstvarivanjaPrihoda.Month.ToString(),
                 datumOstvarivanjaPrihodaDan: datumOstvarivanjaPrihoda.Day.ToString(),
@@ -75,7 +75,7 @@ namespace DividendeXmlGeneratorForm
                 return $"{imePrezimeLabel.Text} must be entered.";
             }
 
-            if (string.IsNullOrWhiteSpace(ulicaBrojTextBox.Text))
+            if (string.IsNullOrWhiteSpace(ulicaBrojPoreskogObveznikaTextBox.Text))
             {
                 return $"{ulicaBrojLabel.Text} must be entered.";
             }
