@@ -29,12 +29,12 @@ namespace DividendeXmlGeneratorForm
             }
 
             // Get the user input
-            string imePrezimeObveznika = imePrezimeTextBox.Text;
+            string imePrezimeObveznika = imePrezimeObveznikaTextBox.Text;
             string ulicaBroj = ulicaBrojTextBox.Text;
-            string jmbgPodnosioca = jmbgTextBox.Text;
-            string telefonKontaktOsobe = telefonTextBox.Text;
+            string jmbgPodnosioca = jmbgPodnosiocaTextBox.Text;
+            string telefonKontaktOsobe = telefonKontaktOsobeTextBox.Text;
             string email = emailTextBox.Text;
-            string opstinaPrebivalista = prebivalisteComboBox.Text;
+            string opstinaPrebivalista = opstinaPrebivalistaComboBox.Text;
             string kodOpstinePrebivalista = opstinaPrebivalista.Split(" - ")[1];
             DateTime datumOstvarivanjaPrihoda = datumOstvarivanjaPrihodaDateTimePicker.Value;
             string valuta = valutaComboBox.Text;
@@ -66,7 +66,7 @@ namespace DividendeXmlGeneratorForm
         {
             // Perform your validation logic here
             // Return an error message if validation fails, or an empty string if validation passes
-            if (string.IsNullOrWhiteSpace(imePrezimeTextBox.Text))
+            if (string.IsNullOrWhiteSpace(imePrezimeObveznikaTextBox.Text))
             {
                 return $"{imePrezimeLabel.Text} must be entered.";
             }
@@ -76,27 +76,27 @@ namespace DividendeXmlGeneratorForm
                 return $"{ulicaBrojLabel.Text} must be entered.";
             }
 
-            if (string.IsNullOrWhiteSpace(jmbgTextBox.Text))
+            if (string.IsNullOrWhiteSpace(jmbgPodnosiocaTextBox.Text))
             {
                 return $"{jmbgLabel.Text} must be entered.";
             }
 
-            if (jmbgTextBox.Text.Length != 13)
+            if (jmbgPodnosiocaTextBox.Text.Length != 13)
             {
                 return $"{jmbgLabel.Text} mora imati 13 cifara.";
             }
 
-            if (ContainsNonNumericCharacters(jmbgTextBox.Text))
+            if (ContainsNonNumericCharacters(jmbgPodnosiocaTextBox.Text))
             {
                 return $"{jmbgLabel.Text} mora imati samo cifre.";
             }
 
-            if (string.IsNullOrWhiteSpace(telefonTextBox.Text))
+            if (string.IsNullOrWhiteSpace(telefonKontaktOsobeTextBox.Text))
             {
                 return $"{telefonLabel.Text} must be entered.";
             }
 
-            if (ContainsNonNumericCharacters(telefonTextBox.Text))
+            if (ContainsNonNumericCharacters(telefonKontaktOsobeTextBox.Text))
             {
                 return $"{telefonLabel.Text} mora imati samo cifre.";
             }
@@ -106,7 +106,7 @@ namespace DividendeXmlGeneratorForm
                 return $"{emailLabel.Text} must be entered.";
             }
 
-            if (string.IsNullOrWhiteSpace(prebivalisteComboBox.Text))
+            if (string.IsNullOrWhiteSpace(opstinaPrebivalistaComboBox.Text))
             {
                 return $"{prebivalisteLabel.Text} must be selected.";
             }

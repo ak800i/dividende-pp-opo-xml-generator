@@ -8,17 +8,17 @@
         private System.ComponentModel.IContainer components = null;
 
         private Label imePrezimeLabel;
-        private TextBox imePrezimeTextBox;
+        private TextBox imePrezimeObveznikaTextBox;
         private Label ulicaBrojLabel;
         private TextBox ulicaBrojTextBox;
         private Label jmbgLabel;
-        private TextBox jmbgTextBox;
+        private TextBox jmbgPodnosiocaTextBox;
         private Label telefonLabel;
-        private TextBox telefonTextBox;
+        private TextBox telefonKontaktOsobeTextBox;
         private Label emailLabel;
         private TextBox emailTextBox;
         private Label prebivalisteLabel;
-        private ComboBox prebivalisteComboBox;
+        private ComboBox opstinaPrebivalistaComboBox;
         private Label datumOstvarivanjaPrihodaLabel;
         private DateTimePicker datumOstvarivanjaPrihodaDateTimePicker;
         private Label valutaLabel;
@@ -51,17 +51,17 @@
         private void InitializeComponent()
         {
             this.imePrezimeLabel = new System.Windows.Forms.Label();
-            this.imePrezimeTextBox = new System.Windows.Forms.TextBox();
+            this.imePrezimeObveznikaTextBox = new System.Windows.Forms.TextBox();
             this.ulicaBrojLabel = new System.Windows.Forms.Label();
             this.ulicaBrojTextBox = new System.Windows.Forms.TextBox();
             this.jmbgLabel = new System.Windows.Forms.Label();
-            this.jmbgTextBox = new System.Windows.Forms.TextBox();
+            this.jmbgPodnosiocaTextBox = new System.Windows.Forms.TextBox();
             this.telefonLabel = new System.Windows.Forms.Label();
-            this.telefonTextBox = new System.Windows.Forms.TextBox();
+            this.telefonKontaktOsobeTextBox = new System.Windows.Forms.TextBox();
             this.emailLabel = new System.Windows.Forms.Label();
             this.emailTextBox = new System.Windows.Forms.TextBox();
             this.prebivalisteLabel = new System.Windows.Forms.Label();
-            this.prebivalisteComboBox = new System.Windows.Forms.ComboBox();
+            this.opstinaPrebivalistaComboBox = new System.Windows.Forms.ComboBox();
             this.datumOstvarivanjaPrihodaLabel = new System.Windows.Forms.Label();
             this.datumOstvarivanjaPrihodaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.brutoPrihodLabel = new System.Windows.Forms.Label();
@@ -82,12 +82,12 @@
             this.imePrezimeLabel.TabIndex = 0;
             this.imePrezimeLabel.Text = "Ime i prezime obveznika:";
             // 
-            // imePrezimeTextBox
+            // imePrezimeObveznikaTextBox
             // 
-            this.imePrezimeTextBox.Location = new System.Drawing.Point(200, 20);
-            this.imePrezimeTextBox.Name = "imePrezimeTextBox";
-            this.imePrezimeTextBox.Size = new System.Drawing.Size(160, 23);
-            this.imePrezimeTextBox.TabIndex = 1;
+            this.imePrezimeObveznikaTextBox.Location = new System.Drawing.Point(200, 20);
+            this.imePrezimeObveznikaTextBox.Name = "imePrezimeTextBox";
+            this.imePrezimeObveznikaTextBox.Size = new System.Drawing.Size(160, 23);
+            this.imePrezimeObveznikaTextBox.TabIndex = 1;
             // 
             // ulicaBrojLabel
             // 
@@ -114,12 +114,12 @@
             this.jmbgLabel.TabIndex = 4;
             this.jmbgLabel.Text = "JMBG podnosioca prijave:";
             // 
-            // jmbgTextBox
+            // jmbgPodnosiocaTextBox
             // 
-            this.jmbgTextBox.Location = new System.Drawing.Point(200, 100);
-            this.jmbgTextBox.Name = "jmbgTextBox";
-            this.jmbgTextBox.Size = new System.Drawing.Size(160, 23);
-            this.jmbgTextBox.TabIndex = 5;
+            this.jmbgPodnosiocaTextBox.Location = new System.Drawing.Point(200, 100);
+            this.jmbgPodnosiocaTextBox.Name = "jmbgTextBox";
+            this.jmbgPodnosiocaTextBox.Size = new System.Drawing.Size(160, 23);
+            this.jmbgPodnosiocaTextBox.TabIndex = 5;
             // 
             // telefonLabel
             // 
@@ -130,12 +130,12 @@
             this.telefonLabel.TabIndex = 6;
             this.telefonLabel.Text = "Telefon kontakt osobe:";
             // 
-            // telefonTextBox
+            // telefonKontaktOsobeTextBox
             // 
-            this.telefonTextBox.Location = new System.Drawing.Point(200, 140);
-            this.telefonTextBox.Name = "telefonTextBox";
-            this.telefonTextBox.Size = new System.Drawing.Size(160, 23);
-            this.telefonTextBox.TabIndex = 7;
+            this.telefonKontaktOsobeTextBox.Location = new System.Drawing.Point(200, 140);
+            this.telefonKontaktOsobeTextBox.Name = "telefonTextBox";
+            this.telefonKontaktOsobeTextBox.Size = new System.Drawing.Size(160, 23);
+            this.telefonKontaktOsobeTextBox.TabIndex = 7;
             // 
             // emailLabel
             // 
@@ -162,11 +162,11 @@
             this.prebivalisteLabel.TabIndex = 10;
             this.prebivalisteLabel.Text = "Prebivaliste opstina - kod:";
             // 
-            // prebivalisteComboBox
+            // opstinaPrebivalistaComboBox
             // 
-            this.prebivalisteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.prebivalisteComboBox.FormattingEnabled = true;
-            this.prebivalisteComboBox.Items.AddRange(new object[] {
+            this.opstinaPrebivalistaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.opstinaPrebivalistaComboBox.FormattingEnabled = true;
+            this.opstinaPrebivalistaComboBox.Items.AddRange(new object[] {
             "Ada - 201",
             "Aleksandrovac - 001",
             "Aleksinac - 002",
@@ -363,10 +363,10 @@
             "Šid - 237",
             "Štimlje - 325",
             "Štrpce - 326"});
-            this.prebivalisteComboBox.Location = new System.Drawing.Point(200, 220);
-            this.prebivalisteComboBox.Name = "prebivalisteComboBox";
-            this.prebivalisteComboBox.Size = new System.Drawing.Size(160, 23);
-            this.prebivalisteComboBox.TabIndex = 11;
+            this.opstinaPrebivalistaComboBox.Location = new System.Drawing.Point(200, 220);
+            this.opstinaPrebivalistaComboBox.Name = "prebivalisteComboBox";
+            this.opstinaPrebivalistaComboBox.Size = new System.Drawing.Size(160, 23);
+            this.opstinaPrebivalistaComboBox.TabIndex = 11;
             // 
             // datumOstvarivanjaPrihodaLabel
             // 
@@ -483,17 +483,17 @@
             // 
             this.ClientSize = new System.Drawing.Size(400, 500);
             this.Controls.Add(this.imePrezimeLabel);
-            this.Controls.Add(this.imePrezimeTextBox);
+            this.Controls.Add(this.imePrezimeObveznikaTextBox);
             this.Controls.Add(this.ulicaBrojLabel);
             this.Controls.Add(this.ulicaBrojTextBox);
             this.Controls.Add(this.jmbgLabel);
-            this.Controls.Add(this.jmbgTextBox);
+            this.Controls.Add(this.jmbgPodnosiocaTextBox);
             this.Controls.Add(this.telefonLabel);
-            this.Controls.Add(this.telefonTextBox);
+            this.Controls.Add(this.telefonKontaktOsobeTextBox);
             this.Controls.Add(this.emailLabel);
             this.Controls.Add(this.emailTextBox);
             this.Controls.Add(this.prebivalisteLabel);
-            this.Controls.Add(this.prebivalisteComboBox);
+            this.Controls.Add(this.opstinaPrebivalistaComboBox);
             this.Controls.Add(this.datumOstvarivanjaPrihodaLabel);
             this.Controls.Add(this.datumOstvarivanjaPrihodaDateTimePicker);
             this.Controls.Add(this.valutaLabel);
