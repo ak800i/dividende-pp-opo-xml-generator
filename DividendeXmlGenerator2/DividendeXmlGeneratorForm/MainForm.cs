@@ -97,9 +97,9 @@ namespace DividendeXmlGeneratorForm
                 return $"{emailLabel.Text} must be entered.";
             }
 
-            if (string.IsNullOrWhiteSpace(prebivalisteTextBox.Text))
+            if (string.IsNullOrWhiteSpace(prebivalisteComboBox.Text))
             {
-                return $"{prebivalisteLabel.Text} must be entered.";
+                return $"{prebivalisteLabel.Text} must be selected.";
             }
 
             if (datumOstvarivanjaPrihodaDateTimePicker.Value > DateTime.Now)
@@ -137,7 +137,7 @@ namespace DividendeXmlGeneratorForm
             return regex.IsMatch(input);
         }
 
-        private static Dictionary<string, string> opstineSifre = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> opstineSifre = new Dictionary<string, string>
         {
             { "Ada", "201" },
             { "Aleksandrovac", "001" },
