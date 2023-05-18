@@ -16,6 +16,7 @@ namespace DividendeXmlGeneratorForm
         public MainForm()
         {
             InitializeComponent();
+            // TODO: Rehydrate user input
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
