@@ -1,0 +1,3 @@
+﻿TODO:
+
+Save config in the .exe or documents folder so as to remember last state.
