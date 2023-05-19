@@ -85,7 +85,8 @@ namespace DividendeXmlGeneratorForm
 
             try
             {
-                string directory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string? directory = Path.GetDirectoryName(path: System.Reflection.Assembly.GetEntryAssembly()?.Location);
+                if (directory == null) throw new Exception();
                 string filePath = Path.Combine(directory, "userInput.csv");
 
                 using (var writer = new StreamWriter(filePath))
@@ -114,10 +115,11 @@ namespace DividendeXmlGeneratorForm
 
         private void RehydrateUserInputFromFile()
         {
-            IEnumerable<UserInput> records = null;
+            IEnumerable<UserInput>? records = null;
             try
             {
-                string directory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string? directory = Path.GetDirectoryName(path: System.Reflection.Assembly.GetEntryAssembly()?.Location);
+                if (directory == null) throw new Exception();
                 string filePath = Path.Combine(directory, "userInput.csv");
 
                 using (var reader = new StreamReader(filePath))
@@ -128,7 +130,7 @@ namespace DividendeXmlGeneratorForm
             }
             catch { }
 
-            if (records != null && records.Count() > 0)
+            if (records != null && records.Any())
             {
                 try
                 {
@@ -146,7 +148,7 @@ namespace DividendeXmlGeneratorForm
                 catch { }
             }
 
-            if (records != null && records.Count() > 0)
+            if (records != null && records.Any())
             {
                 UserInput firstRecord = records.First();
 
