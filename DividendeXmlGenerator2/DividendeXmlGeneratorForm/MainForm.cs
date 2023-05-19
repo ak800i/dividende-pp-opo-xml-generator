@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DividendeXmlGeneratorForm
 {
@@ -22,10 +16,13 @@ namespace DividendeXmlGeneratorForm
             this.datumOstvarivanjaPrihodaDateTimePicker.CustomFormat = "dd.MM.yyyy.";
 
             // TODO: Rehydrate user input
+            RehydrateUserInputFromFile();
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
+            //TODO: save user input
+            SaveUserInputToFile();
             string errorMessage = ValidateInput();
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -68,6 +65,105 @@ namespace DividendeXmlGeneratorForm
 
             // Close the GUI window
             this.Close();
+        }
+
+        private void SaveUserInputToFile()
+        {
+            var userInput = new UserInput
+            {
+                ImePrezime = this.imePrezimeObveznikaTextBox.Text,
+                UlicaBroj = this.ulicaBrojPoreskogObveznikaTextBox.Text,
+                Jmbg = this.jmbgPodnosiocaTextBox.Text,
+                TelefonKontaktOsobe = this.telefonKontaktOsobeTextBox.Text,
+                Email = this.emailTextBox.Text,
+                OpstinaPrebivalista = this.opstinaPrebivalistaComboBox.Text,
+                DatumOstvarivanjaPrihoda = this.datumOstvarivanjaPrihodaDateTimePicker.Value,
+                Valuta = this.valutaComboBox.Text,
+                BrutoPrihod = this.brutoPrihodTextBox.Text,
+                PorezPlacenDrugojDrzavi = this.porezPlacenTextBox.Text,
+            };
+
+            try
+            {
+                string directory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string filePath = Path.Combine(directory, "userInput.csv");
+
+                using (var writer = new StreamWriter(filePath))
+                using (var csv = new CsvWriter(writer, new CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { HasHeaderRecord = true }))
+                {
+                    csv.WriteRecords(new List<UserInput> { userInput });
+                }
+
+                Console.WriteLine("Class saved successfully.");
+            }
+            catch
+            {
+                // Saving in the directory of the executable failed, fallback to the Documents directory
+                string documentsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string filePath = Path.Combine(documentsDirectory, "userInput.csv");
+
+                using (var writer = new StreamWriter(filePath))
+                using (var csv = new CsvWriter(writer, new CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { HasHeaderRecord = true }))
+                {
+                    csv.WriteRecords(new List<UserInput> { userInput });
+                }
+
+                Console.WriteLine("Class saved to Documents directory.");
+            }
+        }
+
+        private void RehydrateUserInputFromFile()
+        {
+            IEnumerable<UserInput> records = null;
+            try
+            {
+                string directory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string filePath = Path.Combine(directory, "userInput.csv");
+
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    records = csv.GetRecords<UserInput>().ToList();
+                }
+            }
+            catch { }
+
+            if (records != null && records.Count() > 0)
+            {
+                try
+                {
+
+                    // File not found in the directory of the executable, try the Documents directory
+                    string documentsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string filePath = Path.Combine(documentsDirectory, "userInput.csv");
+
+                    using (var reader = new StreamReader(filePath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        records = csv.GetRecords<UserInput>().ToList();
+                    }
+                }
+                catch { }
+            }
+
+            if (records != null && records.Count() > 0)
+            {
+                UserInput firstRecord = records.First();
+
+                this.imePrezimeObveznikaTextBox.Text = firstRecord.ImePrezime;
+                this.ulicaBrojPoreskogObveznikaTextBox.Text = firstRecord.UlicaBroj;
+                this.jmbgPodnosiocaTextBox.Text = firstRecord.Jmbg;
+                this.telefonKontaktOsobeTextBox.Text = firstRecord.TelefonKontaktOsobe;
+                this.emailTextBox.Text = firstRecord.Email;
+                this.opstinaPrebivalistaComboBox.Text = firstRecord.OpstinaPrebivalista;
+                this.datumOstvarivanjaPrihodaDateTimePicker.Value =
+                    firstRecord.DatumOstvarivanjaPrihoda.HasValue
+                        ? firstRecord.DatumOstvarivanjaPrihoda.Value
+                        : DateTime.Now;
+                this.valutaComboBox.Text = firstRecord.Valuta;
+                this.brutoPrihodTextBox.Text = firstRecord.BrutoPrihod;
+                this.porezPlacenTextBox.Text = firstRecord.PorezPlacenDrugojDrzavi;
+            }
         }
 
         private string ValidateInput()
