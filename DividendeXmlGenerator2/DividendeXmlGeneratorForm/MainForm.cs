@@ -15,25 +15,13 @@ namespace DividendeXmlGeneratorForm
     {
         public MainForm()
         {
-            // Set the CustomFormat string.
-            //this.datumOstvarivanjaPrihodaDateTimePicker.CustomFormat = "dd MM yyyy";
-            //this.datumOstvarivanjaPrihodaDateTimePicker.Format = DateTimePickerFormat.Custom;
-            this.Load += new System.EventHandler(this.MainForm_Load);
-
             InitializeComponent();
+
+            // Set the CustomFormat string.
             this.datumOstvarivanjaPrihodaDateTimePicker.Format = DateTimePickerFormat.Custom;
             this.datumOstvarivanjaPrihodaDateTimePicker.CustomFormat = "dd.MM.yyyy.";
-            // TODO: Rehydrate user input
-        }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            return;
-            // Set the desired format for the DateTimePicker control
-            this.datumOstvarivanjaPrihodaDateTimePicker.Format = DateTimePickerFormat.Custom;
-            this.datumOstvarivanjaPrihodaDateTimePicker.CustomFormat = "dd MM yyyy";
-            //dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            //dateTimePicker1.CustomFormat = "yyyy-MM-dd"; // Replace with your desired format
+            // TODO: Rehydrate user input
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
