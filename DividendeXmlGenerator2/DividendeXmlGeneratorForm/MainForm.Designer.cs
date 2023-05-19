@@ -11,6 +11,8 @@
         private TextBox imePrezimeObveznikaTextBox;
         private Label ulicaBrojLabel;
         private TextBox ulicaBrojPoreskogObveznikaTextBox;
+        private Label poreskiIdentifikacioniBrojObveznikaLabel;
+        private TextBox poreskiIdentifikacioniBrojObveznikaTextBox;
         private Label jmbgLabel;
         private TextBox jmbgPodnosiocaTextBox;
         private Label telefonLabel;
@@ -54,6 +56,8 @@
             this.imePrezimeObveznikaTextBox = new System.Windows.Forms.TextBox();
             this.ulicaBrojLabel = new System.Windows.Forms.Label();
             this.ulicaBrojPoreskogObveznikaTextBox = new System.Windows.Forms.TextBox();
+            this.poreskiIdentifikacioniBrojObveznikaLabel = new System.Windows.Forms.Label();
+            this.poreskiIdentifikacioniBrojObveznikaTextBox = new System.Windows.Forms.TextBox();
             this.jmbgLabel = new System.Windows.Forms.Label();
             this.jmbgPodnosiocaTextBox = new System.Windows.Forms.TextBox();
             this.telefonLabel = new System.Windows.Forms.Label();
@@ -85,7 +89,7 @@
             // imePrezimeObveznikaTextBox
             // 
             this.imePrezimeObveznikaTextBox.Location = new System.Drawing.Point(200, 20);
-            this.imePrezimeObveznikaTextBox.Name = "imePrezimeTextBox";
+            this.imePrezimeObveznikaTextBox.Name = "imePrezimeObveznikaTextBox";
             this.imePrezimeObveznikaTextBox.Size = new System.Drawing.Size(160, 23);
             this.imePrezimeObveznikaTextBox.TabIndex = 1;
             // 
@@ -101,65 +105,80 @@
             // ulicaBrojPoreskogObveznikaTextBox
             // 
             this.ulicaBrojPoreskogObveznikaTextBox.Location = new System.Drawing.Point(200, 60);
-            this.ulicaBrojPoreskogObveznikaTextBox.Name = "ulicaBrojTextBox";
+            this.ulicaBrojPoreskogObveznikaTextBox.Name = "ulicaBrojPoreskogObveznikaTextBox";
             this.ulicaBrojPoreskogObveznikaTextBox.Size = new System.Drawing.Size(160, 23);
             this.ulicaBrojPoreskogObveznikaTextBox.TabIndex = 3;
+            // 
+            // poreskiIdentifikacioniBrojObveznikaLabel
+            // 
+            this.poreskiIdentifikacioniBrojObveznikaLabel.Location = new System.Drawing.Point(20, 100);
+            this.poreskiIdentifikacioniBrojObveznikaLabel.Name = "poreskiIdentifikacioniBrojObveznikaLabel";
+            this.poreskiIdentifikacioniBrojObveznikaLabel.Size = new System.Drawing.Size(100, 23);
+            this.poreskiIdentifikacioniBrojObveznikaLabel.TabIndex = 4;
+            this.poreskiIdentifikacioniBrojObveznikaLabel.Text = "poreski ID obveznika:";
+            // 
+            // poreskiIdentifikacioniBrojObveznikaTextBox
+            // 
+            this.poreskiIdentifikacioniBrojObveznikaTextBox.Location = new System.Drawing.Point(200, 100);
+            this.poreskiIdentifikacioniBrojObveznikaTextBox.Name = "poreskiIdentifikacioniBrojObveznikaTextBox";
+            this.poreskiIdentifikacioniBrojObveznikaTextBox.Size = new System.Drawing.Size(160, 23);
+            this.poreskiIdentifikacioniBrojObveznikaTextBox.TabIndex = 5;
             // 
             // jmbgLabel
             // 
             this.jmbgLabel.AutoSize = true;
-            this.jmbgLabel.Location = new System.Drawing.Point(20, 100);
+            this.jmbgLabel.Location = new System.Drawing.Point(20, 140);
             this.jmbgLabel.Name = "jmbgLabel";
             this.jmbgLabel.Size = new System.Drawing.Size(143, 15);
-            this.jmbgLabel.TabIndex = 4;
+            this.jmbgLabel.TabIndex = 6;
             this.jmbgLabel.Text = "JMBG podnosioca prijave:";
             // 
             // jmbgPodnosiocaTextBox
             // 
-            this.jmbgPodnosiocaTextBox.Location = new System.Drawing.Point(200, 100);
-            this.jmbgPodnosiocaTextBox.Name = "jmbgTextBox";
+            this.jmbgPodnosiocaTextBox.Location = new System.Drawing.Point(200, 140);
+            this.jmbgPodnosiocaTextBox.Name = "jmbgPodnosiocaTextBox";
             this.jmbgPodnosiocaTextBox.Size = new System.Drawing.Size(160, 23);
-            this.jmbgPodnosiocaTextBox.TabIndex = 5;
+            this.jmbgPodnosiocaTextBox.TabIndex = 7;
             // 
             // telefonLabel
             // 
             this.telefonLabel.AutoSize = true;
-            this.telefonLabel.Location = new System.Drawing.Point(20, 140);
+            this.telefonLabel.Location = new System.Drawing.Point(20, 180);
             this.telefonLabel.Name = "telefonLabel";
-            this.telefonLabel.Size = new System.Drawing.Size(127, 15);
-            this.telefonLabel.TabIndex = 6;
+            this.telefonLabel.Size = new System.Drawing.Size(126, 15);
+            this.telefonLabel.TabIndex = 8;
             this.telefonLabel.Text = "Telefon kontakt osobe:";
             // 
             // telefonKontaktOsobeTextBox
             // 
-            this.telefonKontaktOsobeTextBox.Location = new System.Drawing.Point(200, 140);
-            this.telefonKontaktOsobeTextBox.Name = "telefonTextBox";
+            this.telefonKontaktOsobeTextBox.Location = new System.Drawing.Point(200, 180);
+            this.telefonKontaktOsobeTextBox.Name = "telefonKontaktOsobeTextBox";
             this.telefonKontaktOsobeTextBox.Size = new System.Drawing.Size(160, 23);
-            this.telefonKontaktOsobeTextBox.TabIndex = 7;
+            this.telefonKontaktOsobeTextBox.TabIndex = 9;
             // 
             // emailLabel
             // 
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(20, 180);
+            this.emailLabel.Location = new System.Drawing.Point(20, 220);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.Size = new System.Drawing.Size(39, 15);
-            this.emailLabel.TabIndex = 8;
+            this.emailLabel.TabIndex = 10;
             this.emailLabel.Text = "Email:";
             // 
             // emailTextBox
             // 
-            this.emailTextBox.Location = new System.Drawing.Point(200, 180);
+            this.emailTextBox.Location = new System.Drawing.Point(200, 220);
             this.emailTextBox.Name = "emailTextBox";
             this.emailTextBox.Size = new System.Drawing.Size(160, 23);
-            this.emailTextBox.TabIndex = 9;
+            this.emailTextBox.TabIndex = 11;
             // 
             // prebivalisteLabel
             // 
             this.prebivalisteLabel.AutoSize = true;
-            this.prebivalisteLabel.Location = new System.Drawing.Point(20, 220);
+            this.prebivalisteLabel.Location = new System.Drawing.Point(20, 260);
             this.prebivalisteLabel.Name = "prebivalisteLabel";
             this.prebivalisteLabel.Size = new System.Drawing.Size(143, 15);
-            this.prebivalisteLabel.TabIndex = 10;
+            this.prebivalisteLabel.TabIndex = 12;
             this.prebivalisteLabel.Text = "Prebivaliste opstina - kod:";
             // 
             // opstinaPrebivalistaComboBox
@@ -363,31 +382,31 @@
             "Šid - 237",
             "Štimlje - 325",
             "Štrpce - 326"});
-            this.opstinaPrebivalistaComboBox.Location = new System.Drawing.Point(200, 220);
-            this.opstinaPrebivalistaComboBox.Name = "prebivalisteComboBox";
+            this.opstinaPrebivalistaComboBox.Location = new System.Drawing.Point(200, 260);
+            this.opstinaPrebivalistaComboBox.Name = "opstinaPrebivalistaComboBox";
             this.opstinaPrebivalistaComboBox.Size = new System.Drawing.Size(160, 23);
-            this.opstinaPrebivalistaComboBox.TabIndex = 11;
+            this.opstinaPrebivalistaComboBox.TabIndex = 13;
             // 
             // datumOstvarivanjaPrihodaLabel
             // 
             this.datumOstvarivanjaPrihodaLabel.AutoSize = true;
-            this.datumOstvarivanjaPrihodaLabel.Location = new System.Drawing.Point(20, 260);
+            this.datumOstvarivanjaPrihodaLabel.Location = new System.Drawing.Point(20, 300);
             this.datumOstvarivanjaPrihodaLabel.Name = "datumOstvarivanjaPrihodaLabel";
             this.datumOstvarivanjaPrihodaLabel.Size = new System.Drawing.Size(156, 15);
-            this.datumOstvarivanjaPrihodaLabel.TabIndex = 12;
+            this.datumOstvarivanjaPrihodaLabel.TabIndex = 14;
             this.datumOstvarivanjaPrihodaLabel.Text = "Datum ostvarivanja prihoda:";
             // 
             // datumOstvarivanjaPrihodaDateTimePicker
             // 
-            this.datumOstvarivanjaPrihodaDateTimePicker.Location = new System.Drawing.Point(200, 260);
+            this.datumOstvarivanjaPrihodaDateTimePicker.Location = new System.Drawing.Point(200, 300);
             this.datumOstvarivanjaPrihodaDateTimePicker.Name = "datumOstvarivanjaPrihodaDateTimePicker";
             this.datumOstvarivanjaPrihodaDateTimePicker.Size = new System.Drawing.Size(160, 23);
-            this.datumOstvarivanjaPrihodaDateTimePicker.TabIndex = 13;
+            this.datumOstvarivanjaPrihodaDateTimePicker.TabIndex = 15;
             // 
             // brutoPrihodLabel
             // 
             this.brutoPrihodLabel.AutoSize = true;
-            this.brutoPrihodLabel.Location = new System.Drawing.Point(20, 340);
+            this.brutoPrihodLabel.Location = new System.Drawing.Point(20, 380);
             this.brutoPrihodLabel.Name = "brutoPrihodLabel";
             this.brutoPrihodLabel.Size = new System.Drawing.Size(77, 15);
             this.brutoPrihodLabel.TabIndex = 16;
@@ -395,7 +414,7 @@
             // 
             // brutoPrihodTextBox
             // 
-            this.brutoPrihodTextBox.Location = new System.Drawing.Point(200, 340);
+            this.brutoPrihodTextBox.Location = new System.Drawing.Point(200, 380);
             this.brutoPrihodTextBox.Name = "brutoPrihodTextBox";
             this.brutoPrihodTextBox.Size = new System.Drawing.Size(160, 23);
             this.brutoPrihodTextBox.TabIndex = 17;
@@ -403,10 +422,10 @@
             // valutaLabel
             // 
             this.valutaLabel.AutoSize = true;
-            this.valutaLabel.Location = new System.Drawing.Point(20, 300);
+            this.valutaLabel.Location = new System.Drawing.Point(20, 340);
             this.valutaLabel.Name = "valutaLabel";
             this.valutaLabel.Size = new System.Drawing.Size(42, 15);
-            this.valutaLabel.TabIndex = 14;
+            this.valutaLabel.TabIndex = 18;
             this.valutaLabel.Text = "Valuta:";
             // 
             // valutaComboBox
@@ -449,33 +468,33 @@
             "LUF",
             "PTE",
             "ESP"});
-            this.valutaComboBox.Location = new System.Drawing.Point(200, 300);
+            this.valutaComboBox.Location = new System.Drawing.Point(200, 340);
             this.valutaComboBox.Name = "valutaComboBox";
             this.valutaComboBox.Size = new System.Drawing.Size(160, 23);
-            this.valutaComboBox.TabIndex = 15;
+            this.valutaComboBox.TabIndex = 19;
             // 
             // porezPlacenLabel
             // 
             this.porezPlacenLabel.AutoSize = true;
-            this.porezPlacenLabel.Location = new System.Drawing.Point(20, 380);
+            this.porezPlacenLabel.Location = new System.Drawing.Point(20, 420);
             this.porezPlacenLabel.Name = "porezPlacenLabel";
             this.porezPlacenLabel.Size = new System.Drawing.Size(149, 15);
-            this.porezPlacenLabel.TabIndex = 18;
+            this.porezPlacenLabel.TabIndex = 20;
             this.porezPlacenLabel.Text = "Porez placen drugoj drzavi:";
             // 
             // porezPlacenTextBox
             // 
-            this.porezPlacenTextBox.Location = new System.Drawing.Point(200, 380);
+            this.porezPlacenTextBox.Location = new System.Drawing.Point(200, 420);
             this.porezPlacenTextBox.Name = "porezPlacenTextBox";
             this.porezPlacenTextBox.Size = new System.Drawing.Size(160, 23);
-            this.porezPlacenTextBox.TabIndex = 19;
+            this.porezPlacenTextBox.TabIndex = 21;
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(200, 420);
+            this.submitButton.Location = new System.Drawing.Point(200, 460);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(75, 23);
-            this.submitButton.TabIndex = 20;
+            this.submitButton.TabIndex = 22;
             this.submitButton.Text = "Submit";
             this.submitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
@@ -486,6 +505,8 @@
             this.Controls.Add(this.imePrezimeObveznikaTextBox);
             this.Controls.Add(this.ulicaBrojLabel);
             this.Controls.Add(this.ulicaBrojPoreskogObveznikaTextBox);
+            this.Controls.Add(this.poreskiIdentifikacioniBrojObveznikaLabel);
+            this.Controls.Add(this.poreskiIdentifikacioniBrojObveznikaTextBox);
             this.Controls.Add(this.jmbgLabel);
             this.Controls.Add(this.jmbgPodnosiocaTextBox);
             this.Controls.Add(this.telefonLabel);
@@ -510,7 +531,6 @@
             this.PerformLayout();
 
         }
-
     }
 
     #endregion

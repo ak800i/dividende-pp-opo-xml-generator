@@ -34,6 +34,7 @@ namespace DividendeXmlGeneratorForm
             // Get the user input
             string imePrezimeObveznika = imePrezimeObveznikaTextBox.Text;
             string ulicaBrojPoreskogObveznika = ulicaBrojPoreskogObveznikaTextBox.Text;
+            string poreskiIdentifikacioniBrojObveznika = poreskiIdentifikacioniBrojObveznikaTextBox.Text;
             string jmbgPodnosioca = jmbgPodnosiocaTextBox.Text;
             string telefonKontaktOsobe = telefonKontaktOsobeTextBox.Text;
             string email = emailTextBox.Text;
@@ -49,6 +50,7 @@ namespace DividendeXmlGeneratorForm
                 imePrezimeObveznika: imePrezimeObveznika,
                 ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                 jmbgPodnosioca: jmbgPodnosioca,
+                poreskiIdentifikacioniBrojObveznika: poreskiIdentifikacioniBrojObveznika,
                 telefonKontaktOsobe: telefonKontaktOsobe,
                 email: email,
                 kodOpstinePrebivalista: kodOpstinePrebivalista,
@@ -250,6 +252,11 @@ namespace DividendeXmlGeneratorForm
         {
             Regex regex = new Regex(@"\D"); // Matches any non-digit character
             return regex.IsMatch(input);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

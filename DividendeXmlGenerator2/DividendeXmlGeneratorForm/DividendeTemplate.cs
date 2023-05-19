@@ -23,7 +23,7 @@ namespace DividendeXmlGeneratorForm
 
     </ns1:PodaciOPrijavi>
     <ns1:PodaciOPoreskomObvezniku>
-        <ns1:PoreskiIdentifikacioniBroj>{JMBGPodnosiocaPrijave}</ns1:PoreskiIdentifikacioniBroj>
+        <ns1:PoreskiIdentifikacioniBroj>{PoreskiIdentifikacioniBroj}</ns1:PoreskiIdentifikacioniBroj>
         <ns1:ImePrezimeObveznika><![CDATA[{ImePrezimeObveznika}]]></ns1:ImePrezimeObveznika>
         <ns1:UlicaBrojPoreskogObveznika><![CDATA[{UlicaBrojPoreskogObveznika}]]></ns1:UlicaBrojPoreskogObveznika>
         <ns1:PrebivalisteOpstina>{PrebivalisteOpstina}</ns1:PrebivalisteOpstina>

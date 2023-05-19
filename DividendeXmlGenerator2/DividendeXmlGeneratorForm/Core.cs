@@ -25,6 +25,7 @@ namespace DividendeXmlGeneratorForm
             string imePrezimeObveznika,
             string ulicaBrojPoreskogObveznika,
             string jmbgPodnosioca,
+            string poreskiIdentifikacioniBrojObveznika,
             string telefonKontaktOsobe,
             string email,
             string kodOpstinePrebivalista,
@@ -75,6 +76,7 @@ namespace DividendeXmlGeneratorForm
                 .Replace("{ImePrezimeObveznika}", imePrezimeObveznika)
                 .Replace("{UlicaBrojPoreskogObveznika}", ulicaBrojPoreskogObveznika)
                 .Replace("{JMBGPodnosiocaPrijave}", jmbgPodnosioca)
+                .Replace("{PoreskiIdentifikacioniBroj}", poreskiIdentifikacioniBrojObveznika)
                 .Replace("{ElektronskaPosta}", email)
                 .Replace("{PrebivalisteOpstina}", kodOpstinePrebivalista)
                 .Replace("{TelefonKontaktOsobe}", telefonKontaktOsobe)
