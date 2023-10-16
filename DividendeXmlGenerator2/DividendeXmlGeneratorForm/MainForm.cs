@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.VisualBasic.FileIO;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -75,6 +76,7 @@ namespace DividendeXmlGeneratorForm
             {
                 ImePrezime = this.imePrezimeObveznikaTextBox.Text,
                 UlicaBroj = this.ulicaBrojPoreskogObveznikaTextBox.Text,
+                PoreskiIdentifikacioniBrojObveznika = this.poreskiIdentifikacioniBrojObveznikaTextBox.Text,
                 Jmbg = this.jmbgPodnosiocaTextBox.Text,
                 TelefonKontaktOsobe = this.telefonKontaktOsobeTextBox.Text,
                 Email = this.emailTextBox.Text,
@@ -156,6 +158,7 @@ namespace DividendeXmlGeneratorForm
 
                 this.imePrezimeObveznikaTextBox.Text = firstRecord.ImePrezime;
                 this.ulicaBrojPoreskogObveznikaTextBox.Text = firstRecord.UlicaBroj;
+                this.poreskiIdentifikacioniBrojObveznikaTextBox.Text = firstRecord.PoreskiIdentifikacioniBrojObveznika;
                 this.jmbgPodnosiocaTextBox.Text = firstRecord.Jmbg;
                 this.telefonKontaktOsobeTextBox.Text = firstRecord.TelefonKontaktOsobe;
                 this.emailTextBox.Text = firstRecord.Email;
@@ -257,6 +260,114 @@ namespace DividendeXmlGeneratorForm
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            //TODO: save user input
+            SaveUserInputToFile();
+            string errorMessage = ValidateInput();
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                // Display error message
+                MessageBox.Show(errorMessage, "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Get the user input
+            string imePrezimeObveznika = imePrezimeObveznikaTextBox.Text;
+            string ulicaBrojPoreskogObveznika = ulicaBrojPoreskogObveznikaTextBox.Text;
+            string poreskiIdentifikacioniBrojObveznika = poreskiIdentifikacioniBrojObveznikaTextBox.Text;
+            string jmbgPodnosioca = jmbgPodnosiocaTextBox.Text;
+            string telefonKontaktOsobe = telefonKontaktOsobeTextBox.Text;
+            string email = emailTextBox.Text;
+            string opstinaPrebivalista = opstinaPrebivalistaComboBox.Text;
+            string kodOpstinePrebivalista = opstinaPrebivalista.Split(" - ")[1];
+
+            string valuta = valutaComboBox.Text;
+
+            // from csv import columns
+            // datumOstvarivanjaPrihoda
+
+            // TODO foreach CSV column read data and 
+
+            string filePath = @"D:\Users\Belgr\Desktop\XC7-5644-C - dividenda i porez Aleksa2.csv";
+
+            List<TradeData> tradeDataList = ParseTradeDataFromCsv(filePath);
+            int redniBroj = 0;
+            foreach (var tradeData in tradeDataList)
+            {
+                DateTime datumOstvarivanjaPrihoda = tradeData.TradeDate;
+                decimal brutoPrihod = tradeData.Priliv;
+                ////decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
+
+                // Input validation passed, perform further actions
+                string xml = Core.GenerateXml(
+                    imePrezimeObveznika: imePrezimeObveznika,
+                    ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
+                    jmbgPodnosioca: jmbgPodnosioca,
+                    poreskiIdentifikacioniBrojObveznika: poreskiIdentifikacioniBrojObveznika,
+                    telefonKontaktOsobe: telefonKontaktOsobe,
+                    email: email,
+                    kodOpstinePrebivalista: kodOpstinePrebivalista,
+                    datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
+                    valuta: valuta,
+                    brutoPrihod: brutoPrihod,
+                    porezPlacenDrugojDrzavi: 0m);
+
+                // Create a new XML file with the filled-in template
+                string newFilePath = String.Format(@"{0}\AO\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), redniBroj++);
+                File.WriteAllText(newFilePath, xml);
+
+                Console.WriteLine($"New file created at {newFilePath}");
+            }
+
+            // Close the GUI window
+            this.Close();
+        }
+
+        static List<TradeData> ParseTradeDataFromCsv(string filePath)
+        {
+            List<TradeData> tradeDataList = new List<TradeData>();
+
+            using (TextFieldParser parser = new TextFieldParser(filePath))
+            {
+                parser.SetDelimiters(";"); // Set the delimiter used in your CSV
+
+                // Skip the header row
+                parser.ReadLine();
+
+                while (!parser.EndOfData)
+                {
+                    string[] fields = parser.ReadFields();
+
+                    // Assuming the order of fields in the CSV matches the TradeData class
+                    TradeData tradeData = new TradeData
+                    {
+                        TradeDate = DateTime.Parse(fields[0]),
+                        Tran = fields[1],
+                        Quantity = int.Parse(fields[2]),
+                        Description = fields[3],
+                        Odliv = decimal.Parse(fields[4]),
+                        Priliv = decimal.Parse(fields[5]),
+                        SveZajedno = decimal.Parse(fields[6])
+                    };
+
+                    tradeDataList.Add(tradeData);
+                }
+            }
+
+            return tradeDataList;
+        }
+        class TradeData
+        {
+            public DateTime TradeDate { get; set; }
+            public string Tran { get; set; }
+            public int Quantity { get; set; }
+            public string Description { get; set; }
+            public decimal Odliv { get; set; }
+            public decimal Priliv { get; set; }
+            public decimal SveZajedno { get; set; }
         }
     }
 }

@@ -10,6 +10,9 @@ namespace DividendeXmlGeneratorForm
         [Name("Ulica i broj")]
         public string? UlicaBroj { get; set; }
 
+        [Name("poreski ID obveznika")]
+        public string? PoreskiIdentifikacioniBrojObveznika { get; set; }
+
         [Name("JMBG")]
         public string? Jmbg { get; set; }
 

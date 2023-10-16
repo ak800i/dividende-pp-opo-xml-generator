@@ -35,7 +35,7 @@ namespace DividendeXmlGeneratorForm
     <ns1:PodaciONacinuOstvarivanjaPrihoda>
         <ns1:NacinIsplate>3</ns1:NacinIsplate>
 
-        <ns1:Ostalo>Na račun brokera u americi</ns1:Ostalo>
+        <ns1:Ostalo>Na račun brokera u Kanadi</ns1:Ostalo>
     </ns1:PodaciONacinuOstvarivanjaPrihoda>
     <ns1:DeklarisaniPodaciOVrstamaPrihoda>
 
@@ -57,14 +57,14 @@ namespace DividendeXmlGeneratorForm
         <ns1:OsnovicaZaPorez>{OsnovicaZaPorez}</ns1:OsnovicaZaPorez>
         <ns1:ObracunatiPorez>{ObracunatiPorez}</ns1:ObracunatiPorez>
         <ns1:PorezPlacenDrugojDrzavi>{PorezPlacenDrugojDrzavi}</ns1:PorezPlacenDrugojDrzavi>
-        <ns1:PorezZaUplatu>0.00</ns1:PorezZaUplatu>
+        <ns1:PorezZaUplatu>{PorezZaUplatuUkupno}</ns1:PorezZaUplatu>
         <ns1:OsnovicaZaDoprinose>0.00</ns1:OsnovicaZaDoprinose>
         <ns1:PIO>0.00</ns1:PIO>
         <ns1:ZDRAVSTVO>0.00</ns1:ZDRAVSTVO>
         <ns1:NEZAPOSLENOST>0.00</ns1:NEZAPOSLENOST>
     </ns1:Ukupno>
     <ns1:Kamata>
-        <ns1:PorezZaUplatu>0.00</ns1:PorezZaUplatu>
+        <ns1:PorezZaUplatu>{PorezZaUplatuKamata}</ns1:PorezZaUplatu>
         <ns1:OsnovicaZaDoprinose>0.00</ns1:OsnovicaZaDoprinose>
         <ns1:PIO>0.00</ns1:PIO>
         <ns1:ZDRAVSTVO>0.00</ns1:ZDRAVSTVO>
