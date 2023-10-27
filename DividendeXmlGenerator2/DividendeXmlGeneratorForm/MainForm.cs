@@ -57,8 +57,8 @@ namespace DividendeXmlGeneratorForm
                 telefonKontaktOsobe: telefonKontaktOsobe,
                 email: email,
                 kodOpstinePrebivalista: kodOpstinePrebivalista,
-                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                 valuta: valuta,
+                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                 brutoPrihod: brutoPrihod,
                 porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
                 newFolderName: "PP-OPO");
@@ -305,8 +305,8 @@ namespace DividendeXmlGeneratorForm
                     telefonKontaktOsobe: telefonKontaktOsobe,
                     email: email,
                     kodOpstinePrebivalista: kodOpstinePrebivalista,
-                    datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                     valuta: valuta,
+                    datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                     brutoPrihod: brutoPrihod,
                     porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
                     newFolderName: Path.GetFileName(openFileDialog.FileName));

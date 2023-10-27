@@ -22,14 +22,14 @@ namespace DividendeXmlGeneratorForm
             string telefonKontaktOsobe,
             string email,
             string kodOpstinePrebivalista,
-            DateTime datumOstvarivanjaPrihodaDateTime,
             string valuta,
+            DateTime datumOstvarivanjaPrihodaDateTime,
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi,
             string newFolderName)
         {
             // Generate the XML content
-            string xml = GenerateXml(
+            string xml = GeneratePpOpoXml(
                 imePrezimeObveznika: imePrezimeObveznika,
                 ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                 jmbgPodnosioca: jmbgPodnosioca,
@@ -37,8 +37,8 @@ namespace DividendeXmlGeneratorForm
                 telefonKontaktOsobe: telefonKontaktOsobe,
                 email: email,
                 kodOpstinePrebivalista: kodOpstinePrebivalista,
-                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihodaDateTime,
                 valuta: valuta,
+                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihodaDateTime,
                 brutoPrihod: brutoPrihod,
                 porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi);
 
@@ -67,7 +67,7 @@ namespace DividendeXmlGeneratorForm
         /// Returns XML as string.
         /// </summary>
         /// <returns>XML as string. Persist it with <see cref="File.WriteAllText(string, string)"/>.</returns>
-        private static string GenerateXml(
+        private static string GeneratePpOpoXml(
             string imePrezimeObveznika,
             string ulicaBrojPoreskogObveznika,
             string jmbgPodnosioca,
@@ -75,8 +75,8 @@ namespace DividendeXmlGeneratorForm
             string telefonKontaktOsobe,
             string email,
             string kodOpstinePrebivalista,
-            DateTime datumOstvarivanjaPrihodaDateTime,
             string valuta,
+            DateTime datumOstvarivanjaPrihodaDateTime,
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi)
         {
