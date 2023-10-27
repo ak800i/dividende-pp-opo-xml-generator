@@ -132,13 +132,13 @@ namespace DividendeXmlGeneratorForm
         {
             decimal ukupanIznosKamate = 0;
             string filePath = @"D:\Users\Belgr\Desktop\poreska-godisnja-stopa.csv";
-            List<DataEntry> dataEntries = ParseCsv(filePath);
+            List<PoreskGodisnjaStopaDataEntry> dataEntries = ParsePoreskGodisnjaStopaCsv(filePath);
             // Example: Loop for each day between minDate and today
             DateTime currentDate = DateTime.Now.Date;
             foreach (DateTime date in EachDay(datumOstvarivanjaPrihodaDateTime, currentDate))
             {
-                DataEntry entryForDate = FindEntriesForDate(dataEntries, date).Single();
-                decimal propisanjaGodisnjaStopa = entryForDate.Poreska;
+                PoreskGodisnjaStopaDataEntry entryForDate = FindEntriesForDate(dataEntries, date).Single();
+                decimal propisanjaGodisnjaStopa = entryForDate.PoreskaStopa;
                 int numberOfDays = GetNumberOfDaysInYear(date.Year);
 
                 decimal iznosDnevneKamate = porezZaUplatuUkupnoDouble * propisanjaGodisnjaStopa / 100 / numberOfDays;
@@ -167,16 +167,16 @@ namespace DividendeXmlGeneratorForm
             }
         }
 
-        static List<DataEntry> FindEntriesForDate(List<DataEntry> dataEntries, DateTime date)
+        static List<PoreskGodisnjaStopaDataEntry> FindEntriesForDate(List<PoreskGodisnjaStopaDataEntry> dataEntries, DateTime date)
         {
             return dataEntries
                 .Where(entry => date >= entry.PeriodOd && date <= entry.PeriodDo)
                 .ToList();
         }
 
-        private static List<DataEntry> ParseCsv(string filePath)
+        private static List<PoreskGodisnjaStopaDataEntry> ParsePoreskGodisnjaStopaCsv(string filePath)
         {
-            List<DataEntry> dataEntries = new List<DataEntry>();
+            List<PoreskGodisnjaStopaDataEntry> dataEntries = new List<PoreskGodisnjaStopaDataEntry>();
 
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
@@ -193,14 +193,14 @@ namespace DividendeXmlGeneratorForm
                     string periodOd = fields[0];
                     string periodDo = fields[1];
                     int periodDana = int.Parse(fields[2]);
-                    decimal poreska = decimal.Parse(fields[3], CultureInfo.InvariantCulture); // Use InvariantCulture to handle ',' as decimal separator
+                    decimal poreskaStopa = decimal.Parse(fields[3], CultureInfo.InvariantCulture); // Use InvariantCulture to handle ',' as decimal separator
 
-                    DataEntry entry = new DataEntry
+                    PoreskGodisnjaStopaDataEntry entry = new PoreskGodisnjaStopaDataEntry
                     {
                         PeriodOd = DateTime.ParseExact(periodOd, "dd.MM.yyyy.", CultureInfo.InvariantCulture),
                         PeriodDo = DateTime.ParseExact(periodDo, "dd.MM.yyyy.", CultureInfo.InvariantCulture),
                         PeriodDana = periodDana,
-                        Poreska = poreska
+                        PoreskaStopa = poreskaStopa
                     };
 
                     dataEntries.Add(entry);
@@ -210,12 +210,12 @@ namespace DividendeXmlGeneratorForm
             return dataEntries;
         }
 
-        class DataEntry
+        class PoreskGodisnjaStopaDataEntry
         {
             public DateTime PeriodOd { get; set; }
             public DateTime PeriodDo { get; set; }
             public int PeriodDana { get; set; }
-            public decimal Poreska { get; set; }
+            public decimal PoreskaStopa { get; set; }
         }
 
         static List<KursNaDan> cadKursCsv;
