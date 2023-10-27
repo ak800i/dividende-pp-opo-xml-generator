@@ -49,7 +49,7 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
             decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
 
-            Core.GenerateXmlFile(
+            Core.GeneratePpOpoXmlFile(
                 imePrezimeObveznika: imePrezimeObveznika,
                 ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                 jmbgPodnosioca: jmbgPodnosioca,
@@ -297,7 +297,7 @@ namespace DividendeXmlGeneratorForm
                 decimal brutoPrihod = tradeData.Priliv;
                 decimal porezPlacenDrugojDrzavi = 0m;
 
-                Core.GenerateXmlFile(
+                Core.GeneratePpOpoXmlFile(
                     imePrezimeObveznika: imePrezimeObveznika,
                     ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                     jmbgPodnosioca: jmbgPodnosioca,

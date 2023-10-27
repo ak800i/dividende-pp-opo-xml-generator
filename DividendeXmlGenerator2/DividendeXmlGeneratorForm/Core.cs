@@ -14,7 +14,7 @@ namespace DividendeXmlGeneratorForm
 {
     internal class Core
     {
-        public static void GenerateXmlFile(
+        public static void GeneratePpOpoXmlFile(
             string imePrezimeObveznika,
             string ulicaBrojPoreskogObveznika,
             string jmbgPodnosioca,
