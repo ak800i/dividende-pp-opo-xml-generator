@@ -91,7 +91,7 @@ namespace DividendeXmlGeneratorForm
 
             decimal kursNaDanOstvarivanjaPrihoda = GetKursNaDan(datumOstvarivanjaPrihodaGodina, datumOstvarivanjaPrihodaMesec, datumOstvarivanjaPrihodaDan, valuta);
             string obracunskiPeriod = $"{datumOstvarivanjaPrihodaGodina}-{datumOstvarivanjaPrihodaMesec}";
-            string datumDospelostiObaveze = MonthLater(new DateTime(int.Parse(datumOstvarivanjaPrihodaGodina), int.Parse(datumOstvarivanjaPrihodaMesec), int.Parse(datumOstvarivanjaPrihodaDan)));
+            string datumDospelostiObaveze = FirstNextWorkingDayMonthLater(new DateTime(int.Parse(datumOstvarivanjaPrihodaGodina), int.Parse(datumOstvarivanjaPrihodaMesec), int.Parse(datumOstvarivanjaPrihodaDan)));
             string datumObracunaKamate = FirstNextWorkingDay(DateTime.Today);
             string datumOstvarivanjaPrihoda = $"{datumOstvarivanjaPrihodaGodina}-{datumOstvarivanjaPrihodaMesec}-{datumOstvarivanjaPrihodaDan}";
             decimal brutoPrihodDouble = Math.Round(brutoPrihod * kursNaDanOstvarivanjaPrihoda, 2);
@@ -363,10 +363,10 @@ namespace DividendeXmlGeneratorForm
             }
         }
 
-        public static string MonthLater(DateTime from)
+        public static string FirstNextWorkingDayMonthLater(DateTime from)
         {
             DateTime oneMonthLater = from.AddMonths(1);
-            Console.WriteLine("One month later from today is {0:yyyy-MM-dd}", oneMonthLater);
+            Console.WriteLine($"One month later from today is {oneMonthLater:yyyy-MM-dd}");
 
             return FirstNextWorkingDay(oneMonthLater);
         }
