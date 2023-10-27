@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DividendeXmlGeneratorForm
+﻿namespace DividendeXmlGeneratorForm
 {
-    internal class DividendeTemplate
+    internal class PpOpoTemplate
     {
 
-        public static readonly string dividendeXmlTemplate =
+        public static readonly string ppOpoXmlTemplate =
             @"
 <ns1:PodaciPoreskeDeklaracije xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://pid.purs.gov.rs'>
@@ -41,7 +35,7 @@ namespace DividendeXmlGeneratorForm
 
         <ns1:PodaciOVrstamaPrihoda>
             <ns1:RedniBroj>1</ns1:RedniBroj>
-            <ns1:SifraVrstePrihoda>111402000</ns1:SifraVrstePrihoda>
+            <ns1:SifraVrstePrihoda>{SifraVrstePrihoda}</ns1:SifraVrstePrihoda>
 
             <ns1:BrutoPrihod>{BrutoPrihod}</ns1:BrutoPrihod>
             <ns1:OsnovicaZaPorez>{OsnovicaZaPorez}</ns1:OsnovicaZaPorez>

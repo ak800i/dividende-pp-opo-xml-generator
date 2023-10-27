@@ -80,31 +80,12 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi)
         {
-            // Get user input
-            /*
-            string datumOstvarivanjaPrihodaGodina = "2023";
-            string datumOstvarivanjaPrihodaMesec = "03";
-            string datumOstvarivanjaPrihodaDan = "09";
-            double brutoPrihod = 10.00;
-            double porezPlacenDrugojDrzavi = 3.00;
-            
-
-            // One-time user input
-            string imePrezimeObveznika = "ALEKSA JANKOVIĆ";
-            string ulicaBrojPoreskogObveznika = "Београдска 33";
-            string jmbgPodnosioca = "1101995445566";
-            string telefonKontaktOsobe = "0613334444";
-            string email = "aleksa@gmail.com";
-            string kodOpstinePrebivalista = "013"; // OVO JE ZA NOVI BEOGRAD, ZA DRUGE OPSTINE, SAZNAJTE GENERISANJEM XML-a
-            */
-
             string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.Year.ToString();
             string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.Month.ToString("00");
             string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.Day.ToString("00");
 
             brutoPrihod = Math.Round(brutoPrihod, 2);
             porezPlacenDrugojDrzavi = Math.Round(porezPlacenDrugojDrzavi, 2);
-            ////porezZaUplatuUkupno = Math.Round(porezZaUplatuUkupno, 2);
 
             decimal poreskaStopaSrbija = 0.15M;
 
@@ -117,13 +98,13 @@ namespace DividendeXmlGeneratorForm
             decimal osnovicaZaPorezDouble = brutoPrihodDouble;
             decimal obracunatiPorezDouble = Math.Round(osnovicaZaPorezDouble * poreskaStopaSrbija, 2);
             decimal porezPlacenDrugojDrzaviDouble = Math.Round(porezPlacenDrugojDrzavi * kursNaDanOstvarivanjaPrihoda, 2);
-            decimal porezZaUplatuUkupnoDouble = obracunatiPorezDouble - porezPlacenDrugojDrzaviDouble; //// Math.Round(porezZaUplatuUkupno * kursNaDanOstvarivanjaPrihoda, 2);
+            decimal porezZaUplatuUkupnoDouble = obracunatiPorezDouble - porezPlacenDrugojDrzaviDouble;
 
             decimal porezZaUplatuKamata = Math.Round(GetUkupanIznosKamate(datumOstvarivanjaPrihodaDateTime, porezZaUplatuUkupnoDouble), 2);
             decimal porezZaUplatuKamataDouble = Math.Round(porezZaUplatuKamata, 2);
 
             // Fill in the template with user input
-            string filledTemplate = DividendeTemplate.dividendeXmlTemplate
+            string filledTemplate = PpOpoTemplate.ppOpoXmlTemplate
                 .Replace("{ImePrezimeObveznika}", imePrezimeObveznika)
                 .Replace("{UlicaBrojPoreskogObveznika}", ulicaBrojPoreskogObveznika)
                 .Replace("{JMBGPodnosiocaPrijave}", jmbgPodnosioca)
@@ -141,7 +122,8 @@ namespace DividendeXmlGeneratorForm
                 .Replace("{ObracunatiPorez}", obracunatiPorezDouble.ToString())
                 .Replace("{PorezPlacenDrugojDrzavi}", porezPlacenDrugojDrzaviDouble.ToString())
                 .Replace("{PorezZaUplatuUkupno}", porezZaUplatuUkupnoDouble.ToString())
-                .Replace("{PorezZaUplatuKamata}", porezZaUplatuKamataDouble.ToString());
+                .Replace("{PorezZaUplatuKamata}", porezZaUplatuKamataDouble.ToString())
+                .Replace("{SifraVrstePrihoda}", "111402000");
 
             return filledTemplate;
         }
