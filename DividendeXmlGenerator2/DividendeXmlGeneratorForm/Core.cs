@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.DataFormats;
 
 namespace DividendeXmlGeneratorForm
 {
@@ -80,16 +81,16 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi)
         {
-            string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.Year.ToString();
-            string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.Month.ToString("00");
-            string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.Day.ToString("00");
+            string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.Year.ToString("yyyy");
+            string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.Month.ToString("MM");
+            string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.Day.ToString("dd");
 
             brutoPrihod = Math.Round(brutoPrihod, 2);
             porezPlacenDrugojDrzavi = Math.Round(porezPlacenDrugojDrzavi, 2);
 
             decimal poreskaStopaSrbija = 0.15M;
 
-            decimal kursNaDanOstvarivanjaPrihoda = GetKursNaDan(datumOstvarivanjaPrihodaGodina, datumOstvarivanjaPrihodaMesec, datumOstvarivanjaPrihodaDan, valuta);
+            decimal kursNaDanOstvarivanjaPrihoda = GetKursNaDan(datumOstvarivanjaPrihodaDateTime, valuta);
             string obracunskiPeriod = $"{datumOstvarivanjaPrihodaGodina}-{datumOstvarivanjaPrihodaMesec}";
             string datumDospelostiObaveze = FirstNextWorkingDayMonthLater(new DateTime(int.Parse(datumOstvarivanjaPrihodaGodina), int.Parse(datumOstvarivanjaPrihodaMesec), int.Parse(datumOstvarivanjaPrihodaDan)));
             string datumObracunaKamate = FirstNextWorkingDay(DateTime.Today);
@@ -281,7 +282,7 @@ namespace DividendeXmlGeneratorForm
             return csvDataList;
         }
 
-        private static decimal GetKursNaDan(string obracunskiPeriodGodina, string obracunskiPeriodMesec, string obracunskiPeriodDan, string valuta)
+        private static decimal GetKursNaDan(DateTime date, string valuta)
         {
             // Hot path to use cached value
             if (valuta == "CAD")
@@ -290,7 +291,7 @@ namespace DividendeXmlGeneratorForm
                 try
                 {
                     return cadKursCsv
-                        .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
+                        .Where(item => item.KalendarskiDan == $"{date:dd.MM.yyyy.}")
                         .Single().Kurs;
                 }
                 catch { }
@@ -303,7 +304,7 @@ namespace DividendeXmlGeneratorForm
                 try
                 {
                     return usdKursCsv
-                        .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
+                        .Where(item => item.KalendarskiDan == $"{date:dd.MM.yyyy.}")
                         .Single().Kurs;
                 }
                 catch { }
@@ -322,7 +323,7 @@ namespace DividendeXmlGeneratorForm
                     // Locate the date and "Vrsta" dropdown fields and fill in the required values
                     var dateField = driver.FindElement(By.Id("index:inputCalendar1"));
                     dateField.Clear();
-                    dateField.SendKeys($"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.");
+                    dateField.SendKeys($"{date:dd.MM.yyyy.}");
 
                     var vrstaDropdown = driver.FindElement(By.Id("index:vrstaInner"));
                     var vrstaSelect = new SelectElement(vrstaDropdown);
@@ -344,15 +345,13 @@ namespace DividendeXmlGeneratorForm
                     // Close the web browser
                     driver.Quit();
 
-                    /*
-                    if (formiranaNaDan != $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}."
-                        && formiranaNaDan != $"{obracunskiPeriodDan}.0{obracunskiPeriodMesec}.{obracunskiPeriodGodina}."
-                        && formiranaNaDan != $"0{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}."
-                        && formiranaNaDan != $"0{obracunskiPeriodDan}.0{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
+                    DateTime formiranaNaDanDateTime = DateTime.ParseExact(formiranaNaDan, "d.M.yyyy.", CultureInfo.InvariantCulture);
+
+                    if (date - formiranaNaDanDateTime > TimeSpan.FromDays(10)
+                        || date - formiranaNaDanDateTime < TimeSpan.FromDays(0))
                     {
                         throw new Exception("Something went wrong");
                     }
-                    */
 
                     return decimal.Parse(srednjiKurs.Replace(',', '.')) / int.Parse(vaziZa);
                 }
