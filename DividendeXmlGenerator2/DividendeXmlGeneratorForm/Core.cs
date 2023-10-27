@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,7 @@ namespace DividendeXmlGeneratorForm
 {
     internal class Core
     {
-        /// <summary>
-        /// Returns XML as string.
-        /// </summary>
-        /// <returns>XML as string. Persist it with <see cref="File.WriteAllText(string, string)"/>.</returns>
-        public static string GenerateXml(
+        public static void GenerateXmlFile(
             string imePrezimeObveznika,
             string ulicaBrojPoreskogObveznika,
             string jmbgPodnosioca,
@@ -29,8 +26,59 @@ namespace DividendeXmlGeneratorForm
             string valuta,
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi,
-            decimal porezZaUplatuUkupno = 0.00m,
-            decimal porezZaUplatuKamata = 0.00m)
+            string newFolderName)
+        {
+            // Generate the XML content
+            string xml = GenerateXml(
+                imePrezimeObveznika: imePrezimeObveznika,
+                ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
+                jmbgPodnosioca: jmbgPodnosioca,
+                poreskiIdentifikacioniBrojObveznika: poreskiIdentifikacioniBrojObveznika,
+                telefonKontaktOsobe: telefonKontaktOsobe,
+                email: email,
+                kodOpstinePrebivalista: kodOpstinePrebivalista,
+                datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihodaDateTime,
+                valuta: valuta,
+                brutoPrihod: brutoPrihod,
+                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi);
+
+            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), newFolderName);
+
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // Measure time with nanosecond precision using Stopwatch
+            long nanoseconds = Stopwatch.GetTimestamp() * 1000000000L / Stopwatch.Frequency;
+
+            // Convert the nanoseconds to a string with leading zeros for precision
+            string nanosecondsString = nanoseconds.ToString("D9");
+
+            string newFilePath = Path.Combine(folderPath, $"pp-opo-{DateTime.Now:yyyyMMddHHmmssfff}{nanosecondsString}-{Guid.NewGuid()}.xml");
+
+            // Create a new XML file with the filled-in template
+            File.WriteAllText(newFilePath, xml);
+            Console.WriteLine($"New file created at {newFilePath}");
+        }
+
+        /// <summary>
+        /// Returns XML as string.
+        /// </summary>
+        /// <returns>XML as string. Persist it with <see cref="File.WriteAllText(string, string)"/>.</returns>
+        private static string GenerateXml(
+            string imePrezimeObveznika,
+            string ulicaBrojPoreskogObveznika,
+            string jmbgPodnosioca,
+            string poreskiIdentifikacioniBrojObveznika,
+            string telefonKontaktOsobe,
+            string email,
+            string kodOpstinePrebivalista,
+            DateTime datumOstvarivanjaPrihodaDateTime,
+            string valuta,
+            decimal brutoPrihod,
+            decimal porezPlacenDrugojDrzavi)
         {
             // Get user input
             /*
@@ -71,7 +119,7 @@ namespace DividendeXmlGeneratorForm
             decimal porezPlacenDrugojDrzaviDouble = Math.Round(porezPlacenDrugojDrzavi * kursNaDanOstvarivanjaPrihoda, 2);
             decimal porezZaUplatuUkupnoDouble = obracunatiPorezDouble - porezPlacenDrugojDrzaviDouble; //// Math.Round(porezZaUplatuUkupno * kursNaDanOstvarivanjaPrihoda, 2);
 
-            porezZaUplatuKamata = Math.Round(GetUkupanIznosKamate(datumOstvarivanjaPrihodaDateTime, porezZaUplatuUkupnoDouble), 2);
+            decimal porezZaUplatuKamata = Math.Round(GetUkupanIznosKamate(datumOstvarivanjaPrihodaDateTime, porezZaUplatuUkupnoDouble), 2);
             decimal porezZaUplatuKamataDouble = Math.Round(porezZaUplatuKamata, 2);
 
             // Fill in the template with user input
@@ -188,11 +236,12 @@ namespace DividendeXmlGeneratorForm
             public decimal Poreska { get; set; }
         }
 
-        static List<CadKursNaDan> cadKursCsv;
+        static List<KursNaDan> cadKursCsv;
+        static List<KursNaDan> usdKursCsv;
 
-        static List<CadKursNaDan> ParseCadKursCsv(string filePath)
+        static List<KursNaDan> ParseKursCsv(string filePath)
         {
-            List<CadKursNaDan> csvDataList = new List<CadKursNaDan>();
+            List<KursNaDan> csvDataList = new List<KursNaDan>();
 
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
@@ -208,7 +257,7 @@ namespace DividendeXmlGeneratorForm
 
                     if (fields != null && fields.Length == 4)
                     {
-                        CadKursNaDan csvData = new CadKursNaDan
+                        KursNaDan csvData = new KursNaDan
                         {
                             RadniDan = fields[0],
                             KalendarskiDan = fields[1],
@@ -229,7 +278,7 @@ namespace DividendeXmlGeneratorForm
             return csvDataList;
         }
 
-        class CadKursNaDan
+        class KursNaDan
         {
             public string RadniDan { get; set; }
             public string KalendarskiDan { get; set; }
@@ -247,11 +296,32 @@ namespace DividendeXmlGeneratorForm
                     // try obtaining value from cache, if not, continue to chrome driver logic
                     if (cadKursCsv == null)
                     {
-                        cadKursCsv = ParseCadKursCsv(@"D:\Users\Belgr\Desktop\CAD-kurs-istorija.csv");
+                        cadKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\CAD-kurs-istorija.csv");
                     }
 
                     var ret =
                         cadKursCsv
+                        .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
+                        .Single().Kurs;
+
+                    return ret;
+                }
+                catch (Exception) { }
+            }
+
+            // Hot path to use cached value
+            if (valuta == "USD")
+            {
+                try
+                {
+                    // try obtaining value from cache, if not, continue to chrome driver logic
+                    if (usdKursCsv == null)
+                    {
+                        usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
+                    }
+
+                    var ret =
+                        usdKursCsv
                         .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
                         .Single().Kurs;
 

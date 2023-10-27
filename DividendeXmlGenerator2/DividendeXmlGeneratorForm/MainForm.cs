@@ -1,8 +1,10 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.VisualBasic.FileIO;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace DividendeXmlGeneratorForm
 {
@@ -10,21 +12,21 @@ namespace DividendeXmlGeneratorForm
     {
         public MainForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             // Set the CustomFormat string.
             this.datumOstvarivanjaPrihodaDateTimePicker.Format = DateTimePickerFormat.Custom;
             this.datumOstvarivanjaPrihodaDateTimePicker.CustomFormat = "dd.MM.yyyy.";
 
             // TODO: Rehydrate user input
-            RehydrateUserInputFromFile();
+            this.RehydrateUserInputFromFile();
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             //TODO: save user input
-            SaveUserInputToFile();
-            string errorMessage = ValidateInput();
+            this.SaveUserInputToFile();
+            string errorMessage = this.ValidateInput();
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 // Display error message
@@ -41,13 +43,13 @@ namespace DividendeXmlGeneratorForm
             string email = emailTextBox.Text;
             string opstinaPrebivalista = opstinaPrebivalistaComboBox.Text;
             string kodOpstinePrebivalista = opstinaPrebivalista.Split(" - ")[1];
-            DateTime datumOstvarivanjaPrihoda = datumOstvarivanjaPrihodaDateTimePicker.Value;
             string valuta = valutaComboBox.Text;
+
+            DateTime datumOstvarivanjaPrihoda = datumOstvarivanjaPrihodaDateTimePicker.Value;
             decimal brutoPrihod = decimal.Parse(brutoPrihodTextBox.Text);
             decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
 
-            // Input validation passed, perform further actions
-            string xml = Core.GenerateXml(
+            Core.GenerateXmlFile(
                 imePrezimeObveznika: imePrezimeObveznika,
                 ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                 jmbgPodnosioca: jmbgPodnosioca,
@@ -58,13 +60,8 @@ namespace DividendeXmlGeneratorForm
                 datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                 valuta: valuta,
                 brutoPrihod: brutoPrihod,
-                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi);
-
-            // Create a new XML file with the filled-in template
-            string newFilePath = String.Format(@"{0}\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), datumOstvarivanjaPrihoda);
-            File.WriteAllText(newFilePath, xml);
-
-            Console.WriteLine($"New file created at {newFilePath}");
+                porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
+                newFolderName: "PP-OPO");
 
             // Close the GUI window
             this.Close();
@@ -257,16 +254,11 @@ namespace DividendeXmlGeneratorForm
             return regex.IsMatch(input);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void importButton_Click(object sender, EventArgs e)
         {
             //TODO: save user input
-            SaveUserInputToFile();
-            string errorMessage = ValidateInput();
+            this.SaveUserInputToFile();
+            string errorMessage = this.ValidateInput();
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 // Display error message
@@ -283,26 +275,29 @@ namespace DividendeXmlGeneratorForm
             string email = emailTextBox.Text;
             string opstinaPrebivalista = opstinaPrebivalistaComboBox.Text;
             string kodOpstinePrebivalista = opstinaPrebivalista.Split(" - ")[1];
-
             string valuta = valutaComboBox.Text;
 
-            // from csv import columns
-            // datumOstvarivanjaPrihoda
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV Files|*.csv|All Files|*.*",
+                Title = "Select a File"
+            };
 
-            // TODO foreach CSV column read data and 
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                // Display error message
+                MessageBox.Show("File not selected", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            string filePath = @"D:\Users\Belgr\Desktop\XC7-5644-C - dividenda i porez Aleksa2.csv";
-
-            List<TradeData> tradeDataList = ParseTradeDataFromCsv(filePath);
-            int redniBroj = 0;
-            foreach (var tradeData in tradeDataList)
+            List<DividendTradeData> tradeDataList = ParseTradeDataFromCsv(openFileDialog.FileName);
+            foreach (DividendTradeData tradeData in tradeDataList)
             {
                 DateTime datumOstvarivanjaPrihoda = tradeData.TradeDate;
                 decimal brutoPrihod = tradeData.Priliv;
-                ////decimal porezPlacenDrugojDrzavi = decimal.Parse(porezPlacenTextBox.Text);
+                decimal porezPlacenDrugojDrzavi = 0m;
 
-                // Input validation passed, perform further actions
-                string xml = Core.GenerateXml(
+                Core.GenerateXmlFile(
                     imePrezimeObveznika: imePrezimeObveznika,
                     ulicaBrojPoreskogObveznika: ulicaBrojPoreskogObveznika,
                     jmbgPodnosioca: jmbgPodnosioca,
@@ -313,22 +308,17 @@ namespace DividendeXmlGeneratorForm
                     datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                     valuta: valuta,
                     brutoPrihod: brutoPrihod,
-                    porezPlacenDrugojDrzavi: 0m);
-
-                // Create a new XML file with the filled-in template
-                string newFilePath = String.Format(@"{0}\AO\{1}-pp-opo.xml", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), redniBroj++);
-                File.WriteAllText(newFilePath, xml);
-
-                Console.WriteLine($"New file created at {newFilePath}");
+                    porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
+                    newFolderName: Path.GetFileName(openFileDialog.FileName));
             }
 
             // Close the GUI window
             this.Close();
         }
 
-        static List<TradeData> ParseTradeDataFromCsv(string filePath)
+        static List<DividendTradeData> ParseTradeDataFromCsv(string filePath)
         {
-            List<TradeData> tradeDataList = new List<TradeData>();
+            List<DividendTradeData> tradeDataList = new List<DividendTradeData>();
 
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
@@ -342,7 +332,7 @@ namespace DividendeXmlGeneratorForm
                     string[] fields = parser.ReadFields();
 
                     // Assuming the order of fields in the CSV matches the TradeData class
-                    TradeData tradeData = new TradeData
+                    DividendTradeData tradeData = new DividendTradeData
                     {
                         TradeDate = DateTime.Parse(fields[0]),
                         Tran = fields[1],
@@ -359,7 +349,7 @@ namespace DividendeXmlGeneratorForm
 
             return tradeDataList;
         }
-        class TradeData
+        class DividendTradeData
         {
             public DateTime TradeDate { get; set; }
             public string Tran { get; set; }
