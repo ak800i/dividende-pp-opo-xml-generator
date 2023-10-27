@@ -218,8 +218,29 @@ namespace DividendeXmlGeneratorForm
             public decimal PoreskaStopa { get; set; }
         }
 
+        class KursNaDan
+        {
+            public string RadniDan { get; set; }
+            public string KalendarskiDan { get; set; }
+            public int Jedinica { get; set; }
+            public decimal Kurs { get; set; }
+        }
+
         static List<KursNaDan> cadKursCsv;
         static List<KursNaDan> usdKursCsv;
+
+        static Core()
+        {
+            try
+            {
+                cadKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\CAD-kurs-istorija.csv");
+                usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         static List<KursNaDan> ParseKursCsv(string filePath)
         {
@@ -260,56 +281,32 @@ namespace DividendeXmlGeneratorForm
             return csvDataList;
         }
 
-        class KursNaDan
-        {
-            public string RadniDan { get; set; }
-            public string KalendarskiDan { get; set; }
-            public int Jedinica { get; set; }
-            public decimal Kurs { get; set; }
-        }
-
         private static decimal GetKursNaDan(string obracunskiPeriodGodina, string obracunskiPeriodMesec, string obracunskiPeriodDan, string valuta)
         {
             // Hot path to use cached value
             if (valuta == "CAD")
             {
+                // try obtaining value from cache, if not, continue to chrome driver logic
                 try
                 {
-                    // try obtaining value from cache, if not, continue to chrome driver logic
-                    if (cadKursCsv == null)
-                    {
-                        cadKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\CAD-kurs-istorija.csv");
-                    }
-
-                    var ret =
-                        cadKursCsv
+                    return cadKursCsv
                         .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
                         .Single().Kurs;
-
-                    return ret;
                 }
-                catch (Exception) { }
+                catch { }
             }
 
             // Hot path to use cached value
             if (valuta == "USD")
             {
+                // try obtaining value from cache, if not, continue to chrome driver logic
                 try
                 {
-                    // try obtaining value from cache, if not, continue to chrome driver logic
-                    if (usdKursCsv == null)
-                    {
-                        usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
-                    }
-
-                    var ret =
-                        usdKursCsv
+                    return usdKursCsv
                         .Where(item => item.KalendarskiDan == $"{obracunskiPeriodDan}.{obracunskiPeriodMesec}.{obracunskiPeriodGodina}.")
                         .Single().Kurs;
-
-                    return ret;
                 }
-                catch (Exception) { }
+                catch { }
             }
 
             while (true)
