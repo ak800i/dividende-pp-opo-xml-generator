@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.DataFormats;
+using Newtonsoft.Json;
 
 namespace DividendeXmlGeneratorForm
 {
@@ -234,8 +235,8 @@ namespace DividendeXmlGeneratorForm
         {
             try
             {
-                cadKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\CAD-kurs-istorija.csv");
-                usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
+                cadKursCsv = ParseKursCsv(@"E:\Code\DividendeXmlGenerator\DividendeXmlGenerator2\DividendeXmlGeneratorForm\CAD-kurs-istorija.csv");
+                //usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
             }
             catch
             {
@@ -282,84 +283,46 @@ namespace DividendeXmlGeneratorForm
             return csvDataList;
         }
 
-        private static decimal GetKursNaDan(DateTime date, string valuta)
+        private static async Task<decimal> GetExchangeRateAsync(string currencyCode, DateTime date)
         {
-            // Hot path to use cached value
-            if (valuta == "CAD")
-            {
-                // try obtaining value from cache, if not, continue to chrome driver logic
-                try
-                {
-                    return cadKursCsv
-                        .Where(item => item.KalendarskiDan == $"{date:dd.MM.yyyy.}")
-                        .Single().Kurs;
-                }
-                catch { }
-            }
+            string apiUrl = $"https://kurs.resenje.org/api/v1/currencies/{currencyCode}/rates/{date:yyyy-MM-dd}";
 
-            // Hot path to use cached value
-            if (valuta == "USD")
-            {
-                // try obtaining value from cache, if not, continue to chrome driver logic
-                try
-                {
-                    return usdKursCsv
-                        .Where(item => item.KalendarskiDan == $"{date:dd.MM.yyyy.}")
-                        .Single().Kurs;
-                }
-                catch { }
-            }
-
-            while (true)
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(6));
+                    client.Timeout = TimeSpan.FromSeconds(3);
+                    HttpResponseMessage response = await client.GetAsync(apiUrl).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
-                    // Open the Chrome browser and navigate to the website
-                    var driver = new ChromeDriver(@"C:\ProgramData\chocolatey\bin\chromedriver.exe");
-                    driver.Navigate().GoToUrl("https://www.nbs.rs/kursnaListaModul/naZeljeniDan.faces?lang=lat");
 
-                    // Locate the date and "Vrsta" dropdown fields and fill in the required values
-                    var dateField = driver.FindElement(By.Id("index:inputCalendar1"));
-                    dateField.Clear();
-                    dateField.SendKeys($"{date:dd.MM.yyyy.}");
-
-                    var vrstaDropdown = driver.FindElement(By.Id("index:vrstaInner"));
-                    var vrstaSelect = new SelectElement(vrstaDropdown);
-                    vrstaSelect.SelectByText("srednji kurs");
-
-                    // Submit the form
-                    var submitButton = driver.FindElement(By.Id("index:buttonShow"));
-                    submitButton.Click();
-
-                    // Wait for the page to load and locate the "FORMIRANA NA DAN" date and the "SREDNJI KURS" value for the given currency
-                    var formiranaNaDan = driver.FindElement(By.Id("index:id31")).Text;
-                    var srednjiKurs = driver.FindElement(By.XPath($"//td[contains(text(), '{valuta}')]/following-sibling::td[4]")).Text;
-                    var vaziZa = driver.FindElement(By.XPath($"//td[contains(text(), '{valuta}')]/following-sibling::td[3]")).Text;
-
-                    // Print the retrieved values
-                    Console.WriteLine($"FORMIRANA NA DAN: {formiranaNaDan}");
-                    Console.WriteLine($"SREDNJI KURS {valuta}: {srednjiKurs}");
-
-                    // Close the web browser
-                    driver.Quit();
-
-                    DateTime formiranaNaDanDateTime = DateTime.ParseExact(formiranaNaDan, "d.M.yyyy.", CultureInfo.InvariantCulture);
-
-                    if (date - formiranaNaDanDateTime > TimeSpan.FromDays(10)
-                        || date - formiranaNaDanDateTime < TimeSpan.FromDays(0))
+                    // Handle possible null response from JSON deserialization
+                    if (string.IsNullOrEmpty(responseBody))
                     {
-                        throw new Exception("Something went wrong");
+                        throw new InvalidOperationException("Response body cannot be null or empty.");
                     }
 
-                    return decimal.Parse(srednjiKurs.Replace(',', '.')) / int.Parse(vaziZa);
+                    dynamic jsonResponse = JsonConvert.DeserializeObject(responseBody);
+                    if (jsonResponse == null)
+                    {
+                        throw new InvalidOperationException("Failed to deserialize JSON response.");
+                    }
+
+                    return jsonResponse.exchange_middle ?? throw new InvalidOperationException("Exchange rate is missing in the response.");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(30));
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
+
+                throw new InvalidOperationException("Failed.");
             }
+        }
+
+        private static decimal GetKursNaDan(DateTime datum, string valuta)
+        {
+            return GetExchangeRateAsync(valuta, datum).GetAwaiter().GetResult();
         }
 
         public static string FirstNextWorkingDayMonthLater(DateTime from)
