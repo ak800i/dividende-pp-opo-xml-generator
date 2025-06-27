@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualBasic.FileIO;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Windows.Forms.DataFormats;
 using Newtonsoft.Json;
 
 namespace DividendeXmlGeneratorForm
@@ -82,9 +78,9 @@ namespace DividendeXmlGeneratorForm
             decimal brutoPrihod,
             decimal porezPlacenDrugojDrzavi)
         {
-            string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.Year.ToString("yyyy");
-            string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.Month.ToString("MM");
-            string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.Day.ToString("dd");
+            string datumOstvarivanjaPrihodaGodina = datumOstvarivanjaPrihodaDateTime.ToString("yyyy");
+            string datumOstvarivanjaPrihodaMesec = datumOstvarivanjaPrihodaDateTime.ToString("MM");
+            string datumOstvarivanjaPrihodaDan = datumOstvarivanjaPrihodaDateTime.ToString("dd");
 
             brutoPrihod = Math.Round(brutoPrihod, 2);
             porezPlacenDrugojDrzavi = Math.Round(porezPlacenDrugojDrzavi, 2);
@@ -100,9 +96,9 @@ namespace DividendeXmlGeneratorForm
             decimal osnovicaZaPorezDouble = brutoPrihodDouble;
             decimal obracunatiPorezDouble = Math.Round(osnovicaZaPorezDouble * poreskaStopaSrbija, 2);
             decimal porezPlacenDrugojDrzaviDouble = Math.Round(porezPlacenDrugojDrzavi * kursNaDanOstvarivanjaPrihoda, 2);
-            decimal porezZaUplatuUkupnoDouble = obracunatiPorezDouble - porezPlacenDrugojDrzaviDouble;
+            decimal porezZaUplatuUkupnoDouble = Math.Max(0m, obracunatiPorezDouble - porezPlacenDrugojDrzaviDouble);
 
-            decimal porezZaUplatuKamata = Math.Round(GetUkupanIznosKamate(datumOstvarivanjaPrihodaDateTime, porezZaUplatuUkupnoDouble), 2);
+            decimal porezZaUplatuKamata = 0m;
             decimal porezZaUplatuKamataDouble = Math.Round(porezZaUplatuKamata, 2);
 
             // Fill in the template with user input
@@ -133,7 +129,7 @@ namespace DividendeXmlGeneratorForm
         static decimal GetUkupanIznosKamate(DateTime datumOstvarivanjaPrihodaDateTime, decimal porezZaUplatuUkupnoDouble)
         {
             decimal ukupanIznosKamate = 0;
-            string filePath = @"D:\Users\Belgr\Desktop\poreska-godisnja-stopa.csv";
+            string filePath = @"E:\Code\DividendeXmlGenerator\DividendeXmlGenerator2\DividendeXmlGeneratorForm\poreska-godisnja-stopa.csv";
             List<PoreskGodisnjaStopaDataEntry> dataEntries = ParsePoreskGodisnjaStopaCsv(filePath);
             // Example: Loop for each day between minDate and today
             DateTime currentDate = DateTime.Now.Date;
