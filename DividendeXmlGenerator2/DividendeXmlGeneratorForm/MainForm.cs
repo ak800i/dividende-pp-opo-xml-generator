@@ -295,7 +295,7 @@ namespace DividendeXmlGeneratorForm
             {
                 DateTime datumOstvarivanjaPrihoda = tradeData.TradeDate;
                 decimal brutoPrihod = tradeData.Priliv;
-                decimal porezPlacenDrugojDrzavi = 0m;
+                decimal porezPlacenDrugojDrzavi = brutoPrihod * 0.0m;
 
                 Core.GeneratePpOpoXmlFile(
                     imePrezimeObveznika: imePrezimeObveznika,
@@ -309,7 +309,7 @@ namespace DividendeXmlGeneratorForm
                     datumOstvarivanjaPrihodaDateTime: datumOstvarivanjaPrihoda,
                     brutoPrihod: brutoPrihod,
                     porezPlacenDrugojDrzavi: porezPlacenDrugojDrzavi,
-                    newFolderName: Path.GetFileName(openFileDialog.FileName));
+                    newFolderName: $"{Path.GetFileName(openFileDialog.FileName)} - folder");
             }
 
             // Close the GUI window
@@ -338,9 +338,9 @@ namespace DividendeXmlGeneratorForm
                         Tran = fields[1],
                         Quantity = int.Parse(fields[2]),
                         Description = fields[3],
-                        Odliv = decimal.Parse(fields[4]),
-                        Priliv = decimal.Parse(fields[5]),
-                        SveZajedno = decimal.Parse(fields[6])
+                        Odliv = string.IsNullOrWhiteSpace(fields[4]) ? 0 : decimal.Parse(fields[4]),
+                        Priliv = string.IsNullOrWhiteSpace(fields[5]) ? 0 : decimal.Parse(fields[5]),
+                        SveZajedno = string.IsNullOrWhiteSpace(fields[6]) ? 0 : decimal.Parse(fields[6])
                     };
 
                     tradeDataList.Add(tradeData);
