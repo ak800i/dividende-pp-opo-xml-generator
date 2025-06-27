@@ -29,7 +29,7 @@
     <ns1:PodaciONacinuOstvarivanjaPrihoda>
         <ns1:NacinIsplate>3</ns1:NacinIsplate>
 
-        <ns1:Ostalo>Na račun brokera u Kanadi</ns1:Ostalo>
+        <ns1:Ostalo>Na račun brokera</ns1:Ostalo>
     </ns1:PodaciONacinuOstvarivanjaPrihoda>
     <ns1:DeklarisaniPodaciOVrstamaPrihoda>
 
