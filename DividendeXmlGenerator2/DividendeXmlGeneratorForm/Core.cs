@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Newtonsoft.Json;
 
 namespace DividendeXmlGeneratorForm
@@ -126,158 +119,6 @@ namespace DividendeXmlGeneratorForm
             return filledTemplate;
         }
 
-        static decimal GetUkupanIznosKamate(DateTime datumOstvarivanjaPrihodaDateTime, decimal porezZaUplatuUkupnoDouble)
-        {
-            decimal ukupanIznosKamate = 0;
-            string filePath = @"E:\Code\DividendeXmlGenerator\DividendeXmlGenerator2\DividendeXmlGeneratorForm\poreska-godisnja-stopa.csv";
-            List<PoreskGodisnjaStopaDataEntry> dataEntries = ParsePoreskGodisnjaStopaCsv(filePath);
-            // Example: Loop for each day between minDate and today
-            DateTime currentDate = DateTime.Now.Date;
-            foreach (DateTime date in EachDay(datumOstvarivanjaPrihodaDateTime, currentDate))
-            {
-                PoreskGodisnjaStopaDataEntry entryForDate = FindEntriesForDate(dataEntries, date).Single();
-                decimal propisanjaGodisnjaStopa = entryForDate.PoreskaStopa;
-                int numberOfDays = GetNumberOfDaysInYear(date.Year);
-
-                decimal iznosDnevneKamate = porezZaUplatuUkupnoDouble * propisanjaGodisnjaStopa / 100 / numberOfDays;
-                ukupanIznosKamate += iznosDnevneKamate;
-            }
-
-            return ukupanIznosKamate;
-        }
-
-        static int GetNumberOfDaysInYear(int year)
-        {
-            DateTime startOfYear = new DateTime(year, 1, 1);
-            DateTime endOfYear = new DateTime(year, 12, 31);
-
-            TimeSpan span = endOfYear - startOfYear;
-
-            // Add 1 to include both start and end dates
-            return span.Days + 1;
-        }
-
-        static IEnumerable<DateTime> EachDay(DateTime from, DateTime to)
-        {
-            for (var day = from.Date; day.Date <= to.Date; day = day.AddDays(1))
-            {
-                yield return day;
-            }
-        }
-
-        static List<PoreskGodisnjaStopaDataEntry> FindEntriesForDate(List<PoreskGodisnjaStopaDataEntry> dataEntries, DateTime date)
-        {
-            return dataEntries
-                .Where(entry => date >= entry.PeriodOd && date <= entry.PeriodDo)
-                .ToList();
-        }
-
-        private static List<PoreskGodisnjaStopaDataEntry> ParsePoreskGodisnjaStopaCsv(string filePath)
-        {
-            List<PoreskGodisnjaStopaDataEntry> dataEntries = new List<PoreskGodisnjaStopaDataEntry>();
-
-            using (TextFieldParser parser = new TextFieldParser(filePath))
-            {
-                parser.SetDelimiters(";");
-
-                // Skip the header line
-                parser.ReadLine();
-
-                while (!parser.EndOfData)
-                {
-                    string[] fields = parser.ReadFields();
-
-                    // Assuming the order of fields is PeriodOd, PeriodDo, PeriodDana, Poreska
-                    string periodOd = fields[0];
-                    string periodDo = fields[1];
-                    int periodDana = int.Parse(fields[2]);
-                    decimal poreskaStopa = decimal.Parse(fields[3], CultureInfo.InvariantCulture); // Use InvariantCulture to handle ',' as decimal separator
-
-                    PoreskGodisnjaStopaDataEntry entry = new PoreskGodisnjaStopaDataEntry
-                    {
-                        PeriodOd = DateTime.ParseExact(periodOd, "dd.MM.yyyy.", CultureInfo.InvariantCulture),
-                        PeriodDo = DateTime.ParseExact(periodDo, "dd.MM.yyyy.", CultureInfo.InvariantCulture),
-                        PeriodDana = periodDana,
-                        PoreskaStopa = poreskaStopa
-                    };
-
-                    dataEntries.Add(entry);
-                }
-            }
-
-            return dataEntries;
-        }
-
-        class PoreskGodisnjaStopaDataEntry
-        {
-            public DateTime PeriodOd { get; set; }
-            public DateTime PeriodDo { get; set; }
-            public int PeriodDana { get; set; }
-            public decimal PoreskaStopa { get; set; }
-        }
-
-        class KursNaDan
-        {
-            public string RadniDan { get; set; }
-            public string KalendarskiDan { get; set; }
-            public int Jedinica { get; set; }
-            public decimal Kurs { get; set; }
-        }
-
-        static List<KursNaDan> cadKursCsv;
-        static List<KursNaDan> usdKursCsv;
-
-        static Core()
-        {
-            try
-            {
-                cadKursCsv = ParseKursCsv(@"E:\Code\DividendeXmlGenerator\DividendeXmlGenerator2\DividendeXmlGeneratorForm\CAD-kurs-istorija.csv");
-                //usdKursCsv = ParseKursCsv(@"D:\Users\Belgr\Desktop\USD-kurs-istorija.csv");
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        static List<KursNaDan> ParseKursCsv(string filePath)
-        {
-            List<KursNaDan> csvDataList = new List<KursNaDan>();
-
-            using (TextFieldParser parser = new TextFieldParser(filePath))
-            {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
-
-                // Skip the header
-                parser.ReadLine();
-
-                while (!parser.EndOfData)
-                {
-                    string[] fields = parser.ReadFields();
-
-                    if (fields != null && fields.Length == 4)
-                    {
-                        KursNaDan csvData = new KursNaDan
-                        {
-                            RadniDan = fields[0],
-                            KalendarskiDan = fields[1],
-                            Jedinica = int.Parse(fields[2]),
-                            Kurs = decimal.Parse(fields[3])
-                        };
-
-                        csvDataList.Add(csvData);
-                    }
-                    else
-                    {
-                        // Handle the case where a line doesn't have the expected number of fields
-                        Console.WriteLine("Error parsing line: " + string.Join(", ", fields));
-                    }
-                }
-            }
-
-            return csvDataList;
-        }
 
         private static async Task<decimal> GetExchangeRateAsync(string currencyCode, DateTime date)
         {
@@ -299,11 +140,8 @@ namespace DividendeXmlGeneratorForm
                         throw new InvalidOperationException("Response body cannot be null or empty.");
                     }
 
-                    dynamic jsonResponse = JsonConvert.DeserializeObject(responseBody);
-                    if (jsonResponse == null)
-                    {
-                        throw new InvalidOperationException("Failed to deserialize JSON response.");
-                    }
+                    var deserialized = JsonConvert.DeserializeObject(responseBody) ?? throw new InvalidOperationException("Failed to deserialize JSON response.");
+                    dynamic jsonResponse = deserialized;
 
                     return jsonResponse.exchange_middle ?? throw new InvalidOperationException("Exchange rate is missing in the response.");
                 }
